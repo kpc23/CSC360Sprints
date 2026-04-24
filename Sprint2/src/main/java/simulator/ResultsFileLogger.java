@@ -8,10 +8,13 @@ package simulator;
  */
 public class ResultsFileLogger extends Observer
 {
-	String messageUpdate; 
-	public String getMessage() {
+	String messageUpdate;
+
+	public String getMessage()
+	{
 		return messageUpdate;
 	}
+
 	@Override
 	void update(Subject subject)
 	{

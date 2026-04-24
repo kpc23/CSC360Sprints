@@ -33,19 +33,19 @@ public class IteratedPrisonersDilemma extends Game
 		{
 			currentState.p1Score += 3;
 			currentState.p2Score += 3;
-		} 
+		}
 		if (action1 == 1 && action2 == 0)
 		{
 			currentState.p1Score += 5;
 			currentState.p2Score += 0;
 
-		} 
+		}
 		if (action1 == 0 && action2 == 1)
 		{
 			currentState.p1Score += 0;
 			currentState.p2Score += 5;
 
-		} 
+		}
 		if (action1 == 1 && action2 == 1)
 		{
 			currentState.p1Score += 1;
