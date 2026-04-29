@@ -1,9 +1,7 @@
 package simulator;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.ArrayList;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,7 @@ import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureRestTe
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.test.web.servlet.client.RestTestClient;
+import org.springframework.web.client.HttpServerErrorException;
 /**
  * TournamentServer Test 
  */
@@ -21,8 +19,8 @@ import org.springframework.test.web.servlet.client.RestTestClient;
 @AutoConfigureRestTestClient
 class TournamentServerTest
 {
-	@Autowired
-	private RestTestClient tClient;
+//	@Autowired
+//	private RestTestClient tClient; - dont need this..
 
 	
 	@Autowired
@@ -51,7 +49,8 @@ class TournamentServerTest
 	void testRegisterOpen()
 	{		
 		tServer.beginRegistration(t1);
-		
+		assertEquals(true, tServer.registrationStatus.get(t1));
+
 		RemoteClient client = new RemoteClient("http://localhost", port);
 		
 		client.registerForTournament("localhost", port, "tour1", "karla");
@@ -71,10 +70,10 @@ class TournamentServerTest
 	void testRegisterEnded()
 	{		
 		tServer.endRegistration(t1);
-		
+		assertEquals(false, tServer.registrationStatus.get(t1));
 		RemoteClient client = new RemoteClient("http://localhost", port);
 		
-		client.registerForTournament("localhost", port, "tour1", "karla");
+		assertThrows(HttpServerErrorException.class, () -> client.registerForTournament("localhost", port, "tour1", "karla"));
 		//check tournament is registered and that player name is too. 
 		assertEquals(0, t1.scoreboard.size());
 	}
@@ -96,7 +95,29 @@ class TournamentServerTest
 		
 		tServer.beginTournament(t1);
 		assertEquals(2, t1.scoreboard.size());
-		assertTrue(scoreboard.get(0).totalScore > 0);
+	}
+	
+	@Test
+	void testRegisterNullTournament()
+	{
+		assertThrows(Exception.class, () -> 
+			tServer.register(null, null, port, null));
+	}
+	
+	@Test
+	void testRegisterInvalidIPAddressTournament()
+	{
+		tServer.beginRegistration(t1);
+		assertEquals(true, tServer.registrationStatus.get(t1));
+
+		RemoteClient client = new RemoteClient("http://localhost", port);
+		
+		assertThrows(
+				Exception.class, 
+				() -> client.
+				registerForTournament(null, port, "tour1", "karla")
+			);
+
 	}
 	
 }

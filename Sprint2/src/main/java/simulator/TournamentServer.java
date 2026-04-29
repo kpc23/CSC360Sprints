@@ -109,19 +109,19 @@ public class TournamentServer
 	 * @param playerName
 	 * @param port
 	 * @param tournamentName
+	 * @throws Exception 
 	 */
 	@GetMapping("/register/{ipaddress}/{port}/{tournamentName}/{playerName}")
 	public void register(@PathVariable String ipaddress, 
 			@PathVariable String playerName, 
 			@PathVariable int port, 
-			@PathVariable String tournamentName)
+			@PathVariable String tournamentName) throws Exception
 	{
 		Tournament t = availableTournaments.get(tournamentName);
 
 		if (t == null)
 		{
-			System.out.println("Invalid Tournament.");
-			return;
+			throw new Exception("Invalid Tournament");
 		}
 
 		if (registrationStatus.get(t))
@@ -137,13 +137,13 @@ public class TournamentServer
 			} catch (UnknownHostException e)
 			{
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new Exception("Invalid IP Address");
 			}
 			
 		} else
 		{
 			// if registration is closed
-			System.out.println("Unavailable: Registration is closed.");
+			throw new Exception("Unavailable: Registration is closed.");
 		}
 	}
 
