@@ -11,6 +11,14 @@ import java.util.ArrayList;
 public class Tournament
 {
 	ArrayList<TourneyPlayer> scoreboard;
+	/**
+	 * @return the scoreboard
+	 */
+	public ArrayList<TourneyPlayer> getScoreboard()
+	{
+		return scoreboard;
+	}
+
 	Game game;
 	Bracket bracketType;
 

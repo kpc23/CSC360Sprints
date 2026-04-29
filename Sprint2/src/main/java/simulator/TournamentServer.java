@@ -1,10 +1,13 @@
 package simulator;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -47,6 +50,7 @@ public class TournamentServer
 		availableTournaments = new HashMap<>();
 		registrationStatus = new HashMap<>();
 	}
+	
 
 	/**
 	 * Add tournaments for either registration or availability
@@ -57,6 +61,24 @@ public class TournamentServer
 	{
 		availableTournaments.put(str, tournament);
 		registrationStatus.put(tournament, false);
+	}
+	
+	
+
+	/**
+	 * @return the availableTournaments
+	 */
+	public HashMap<String, Tournament> getAvailableTournaments()
+	{
+		return availableTournaments;
+	}
+
+	/**
+	 * @param availableTournaments the availableTournaments to set
+	 */
+	public void setAvailableTournaments(HashMap<String, Tournament> availableTournaments)
+	{
+		this.availableTournaments = availableTournaments;
 	}
 
 	/**
@@ -88,7 +110,11 @@ public class TournamentServer
 	 * @param port
 	 * @param tournamentName
 	 */
-	public void register(InetAddress ipaddress, String playerName, int port, String tournamentName)
+	@GetMapping("/register/{ipaddress}/{port}/{tournamentName}/{playerName}")
+	public void register(@PathVariable String ipaddress, 
+			@PathVariable String playerName, 
+			@PathVariable int port, 
+			@PathVariable String tournamentName)
 	{
 		Tournament t = availableTournaments.get(tournamentName);
 
@@ -100,9 +126,20 @@ public class TournamentServer
 
 		if (registrationStatus.get(t))
 		{
-			// while reg is open...
-			Proxy proxy = new Proxy(playerName, ipaddress, port);
-			t.registerPlayer(proxy);
+			// while reg is open..
+			InetAddress ipadd;
+			try
+			{
+				ipadd = InetAddress.getByName(ipaddress);
+				Proxy proxy = new Proxy(playerName, ipadd, port);
+				t.registerPlayer(proxy);
+				
+			} catch (UnknownHostException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		} else
 		{
 			// if registration is closed

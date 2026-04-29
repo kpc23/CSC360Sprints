@@ -9,13 +9,21 @@ import org.springframework.web.client.RestClient;
 public class RemoteClient
 {
 	RestClient client;
+	String serverAddress;
+	int serverPort;
 
 	/**
 	 * Constructor
 	 */
-	public RemoteClient()
+	public RemoteClient(String serverAddress, int sPort)
 	{
 		client = RestClient.create();
+		//always the same server
+		//so create here the connection between the client always connecting to the same server.
+		
+		
+		this.serverAddress = serverAddress;
+		this.serverPort = sPort;
 	}
 
 	/**
@@ -30,13 +38,20 @@ public class RemoteClient
 	public void registerForTournament(String ipaddress, int port, 
 			String tournamentName, String playerName)
 	{
-		//is this url ok?
-		String url = "http://" + ipaddress + ":" + port + "/register/" + tournamentName + "/" + playerName;
+		///  register/{ipaddress}/{port}/{tournamentName}/{playerName}
+		//    {ipaddress}:{port}/register/{tournamentName}/{playerName}
+		String url = serverAddress + ":" + serverPort + "/register/" 
+				+ ipaddress + "/" + port + "/" + tournamentName 
+				+ "/" + playerName;
 		
+		System.out.println(url);
 		//GET Request
 		client.get()
 		.uri(url)
 		.retrieve()
 		.body(String.class);
 	}
+	
+	
+	
 }

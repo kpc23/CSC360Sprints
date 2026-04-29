@@ -45,19 +45,19 @@ public class Proxy extends Participant
 				);
 	}
 
-	/**
-	 * The Proxy will perform a PUT to the RemoteServer 
-	 * so that the remote Participant may update its memory attribute, 
-	 * using this function updateMemory().
-	 * 
-	 *  intended to translate the stored data in a State class to pass to 
-	 *  the RemoteServer’s Participant. 
-	 *  
-	 * @param state has p1 and p2 name, score, and action for each.
-	 */
-	public void updateMemory(State state)
-	{
-		//need to revise -- unsure how to implement put
-		client.put().body(state);
-	}
+//	/**
+//	 * The Proxy will perform a PUT to the RemoteServer 
+//	 * so that the remote Participant may update its memory attribute, 
+//	 * using this function updateMemory().
+//	 * 
+//	 *  intended to translate the stored data in a State class to pass to 
+//	 *  the RemoteServer’s Participant. 
+//	 *  
+//	 * @param state has p1 and p2 name, score, and action for each.
+//	 */
+//	public void updateMemory(State state)
+//	{
+//		//need to revise -- unsure how to implement put
+//		client.put().body(state).retrieve();
+//	}
 }

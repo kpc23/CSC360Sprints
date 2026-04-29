@@ -15,4 +15,14 @@ public class TourneyPlayer
 		this.totalScore = 0;
 		this.playersPlayed = new ArrayList<>();
 	}
+
+	/**
+	 * @return the player
+	 */
+	public Participant getPlayer()
+	{
+		return player;
+	}
+	
+	
 }

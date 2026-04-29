@@ -15,6 +15,15 @@ public abstract class Participant
 		this.name = name;
 		this.memory = new ArrayList<>();
 	}
+	
+
+	/**
+	 * @return the name
+	 */
+	public String getName()
+	{
+		return name;
+	}
 
 	public void addMemory(State state)
 	{
