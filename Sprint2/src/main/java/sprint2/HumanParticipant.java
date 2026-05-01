@@ -1,6 +1,8 @@
-package simulator;
+package sprint2;
 
 import java.util.Scanner;
+
+import simulator.Participant;
 
 public class HumanParticipant extends Participant
 {

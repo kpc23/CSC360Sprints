@@ -8,6 +8,7 @@ package simulator;
  */
 public abstract class Observer
 {
-	abstract void update(Subject subject);
+	Subject subject;
+	public abstract void update(Subject subject);
 
 }

@@ -10,6 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.web.client.HttpServerErrorException;
+
+import sprint2.RemoteClient;
+import sprint2.TournamentServer;
 /**
  * TournamentServer Test 
  */

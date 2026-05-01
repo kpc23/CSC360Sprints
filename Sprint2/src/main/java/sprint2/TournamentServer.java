@@ -1,7 +1,8 @@
-package simulator;
+package sprint2;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,6 +10,9 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+
+import simulator.Tournament;
+import sprint3.MoveListener;
 
 /**
  * Tournaments can be added to the availableTournaments HashMap through the
@@ -34,6 +38,8 @@ public class TournamentServer
 	HashMap<String, Tournament> availableTournaments;
 	HashMap<Tournament, Boolean> registrationStatus; //true --- open, false -- closed
 
+	ArrayList<MoveListener> spectators; //sprint 3 implementation
+	
 	public static void main(String[] args)
 	{
 		new SpringApplicationBuilder(TournamentServer.class)
@@ -173,5 +179,16 @@ public class TournamentServer
 	public void beginTournament(Tournament tournament)
 	{
 		tournament.playTournament();
+	}
+	
+	/**
+	 * Sprint 3 Implementations
+	 */
+	public void spectateTournament(String name, InetAddress ip, int port) {
+		
+	}
+	
+	public void stopSpectateTournament(String name, InetAddress ip, int port) {
+		
 	}
 }

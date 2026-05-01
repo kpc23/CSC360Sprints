@@ -1,13 +1,13 @@
-package simulator;
+package sprint2;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.web.bind.annotation.*;
+
+import simulator.Participant;
 /**
  * RemoteServer utilizes the Strategy pattern 
  * to support remote player behavior.
- * 
- * 
  */
 
 @SpringBootApplication
@@ -34,10 +34,6 @@ public class RemoteServerController
 	public int makeChoice(@PathVariable int actions)
 	{
 		//should i add a try-catch?
-		//return 3;
 		return participantType.makeChoice(actions);
-	}
-
-	//hmm do i need to update memory here too?
-	
+	}	
 }

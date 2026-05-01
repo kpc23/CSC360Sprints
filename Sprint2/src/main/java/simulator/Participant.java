@@ -30,7 +30,7 @@ public abstract class Participant
 		memory.add(state);
 	}
 
-	abstract int makeChoice(int actions);
+	public abstract int makeChoice(int actions);
 
 	public void clearMemory()
 	{

@@ -1,4 +1,4 @@
-package simulator;
+package sprint2;
 
 import org.springframework.web.client.RestClient;
 /**

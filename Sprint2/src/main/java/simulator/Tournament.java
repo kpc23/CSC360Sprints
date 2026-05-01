@@ -10,7 +10,12 @@ import java.util.ArrayList;
  */
 public class Tournament
 {
+	Game game;
+	Bracket bracketType;
 	ArrayList<TourneyPlayer> scoreboard;
+	boolean registrationOpen; //sprint 3 implementation
+	boolean running; //sprint 3 implementation
+
 	/**
 	 * @return the scoreboard
 	 */
@@ -18,10 +23,7 @@ public class Tournament
 	{
 		return scoreboard;
 	}
-
-	Game game;
-	Bracket bracketType;
-
+	
 	/**
 	 * @param scoreboard
 	 * @param game

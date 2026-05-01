@@ -1,7 +1,9 @@
-package simulator;
+package sprint2;
 
 import java.net.InetAddress;
 import org.springframework.web.client.RestClient;
+
+import simulator.Participant;
 
 /**
  * The Proxy class extends the Participant class and supports hosting remote

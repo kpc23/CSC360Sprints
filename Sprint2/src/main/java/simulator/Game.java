@@ -1,10 +1,7 @@
 /**
- * 
+ * Updated for Sprint 2 and 3
  */
 package simulator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 
@@ -14,7 +11,7 @@ public abstract class Game extends Subject
 	int actions; // number actions players can choose
 	State currentState; // game current state
 	int roundsTaken; // counter for the number of rounds
-
+	int timeDelay; //sprint 3 implementation
 	/**
 	 * Match play between two players
 	 * 
