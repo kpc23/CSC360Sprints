@@ -34,6 +34,8 @@ public class Tournament
 		this.scoreboard = scoreboard;
 		this.game = game;
 		this.bracketType = bracket;
+		this.registrationOpen = false;
+		this.running = false;
 	}
 
 	public void registerPlayer(Participant player)
@@ -64,6 +66,5 @@ public class Tournament
 			pair = bracketType.nextPair(game.currentState);
 
 		}
-
 	}
 }
