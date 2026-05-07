@@ -4,6 +4,8 @@ public interface ViewTransitionalModelInterface
 {
 
 	public void showServerPicker();
-	public void showServerList();
+
+	public void showServerList() throws Exception;
+
 	public void showActiveTournament();
 }

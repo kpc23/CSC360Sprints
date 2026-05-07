@@ -10,19 +10,19 @@ import java.util.ArrayList;
  */
 public abstract class Subject
 {
-	ArrayList<Observer> listeners = new ArrayList<>();
+	public ArrayList<Observer> listeners = new ArrayList<>();
 
-	void register(Observer observer)
+	public void register(Observer observer)
 	{
 		listeners.add(observer);
 	}
 
-	void deregister(Observer observer)
+	public void deregister(Observer observer)
 	{
 		listeners.remove(observer);
 	}
 
-	void notifyObservers()
+	public void notifyObservers()
 	{
 		for (Observer observer : listeners)
 		{

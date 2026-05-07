@@ -6,7 +6,6 @@ import simulator.Participant;
 
 public class HumanParticipant extends Participant
 {
-
 	public HumanParticipant(String name)
 	{
 		super(name);
@@ -29,5 +28,4 @@ public class HumanParticipant extends Participant
 			return chosenAction;
 		}
 	}
-
 }

@@ -1,83 +1,227 @@
 package sprint3model;
 
-import java.net.InetAddress;
-import java.util.ArrayList;
+import java.io.IOException;
 
+import org.springframework.web.client.RestClient;
+
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 import sprint3.ViewTransitionalModelInterface;
+import sprint3view.ActiveTournamentController;
+import sprint3view.ConnectToServerController;
+import sprint3view.TournamentListController;
 
 public class TournamentServerModel implements ViewTransitionalModelInterface
 {
 	ObservableList<String> moveList;
-	ArrayList<String> activeTournamentList = new ArrayList<>();
+	ObservableList<String> activeTournamentList;
 	UserClient client;
-	Scene scene;
-	
-	
-	/**
-	 * @param moveList
-	 * @param activeTournamentList
-	 * @param client
-	 * @param scene
-	 */
-	public TournamentServerModel(ObservableList<String> moveList, ArrayList<String> activeTournamentList,
-			UserClient client, Scene scene)
+	Stage stage;
+	int port;
+	String ipAddress;
+
+	public TournamentServerModel(Stage stage)
 	{
-		this.moveList = moveList;
-		this.activeTournamentList = activeTournamentList;
-		this.client = client;
-		this.scene = scene;
+		this.stage = stage;
+		this.moveList = FXCollections.observableArrayList();
+		this.activeTournamentList = FXCollections.observableArrayList();
 	}
 
-	public void viewTournament(String tournamentName, InetAddress ip, int port) {
-		activeTournamentList.contains(tournamentName);
+	/**
+	 * @return the client
+	 */
+	public UserClient getClient()
+	{
+		return client;
 	}
-	
-	public void unviewTournament(String tournamentName, InetAddress ip, int port) {
-		moveList.clear();
+
+	/**
+	 * @param client the client to set
+	 */
+	public void setClient(UserClient client)
+	{
+		this.client = client;
+	}
+
+	/**
+	 * @return the port
+	 */
+	public int getPort()
+	{
+		return port;
+	}
+
+	/**
+	 * @param port the port to set
+	 */
+	public void setPort(int port)
+	{
+		this.port = port;
+	}
+
+	/**
+	 * @return the ip
+	 */
+	public String getIp()
+	{
+		return ipAddress;
+	}
+
+	/**
+	 * @param ip the ip to set
+	 */
+	public void setIp(String ip)
+	{
+		this.ipAddress = ip;
+	}
+
+	/**
+	 * @return the moveList
+	 */
+	public ObservableList<String> getMoveList()
+	{
+		return moveList;
+	}
+
+	/**
+	 * @return the activeTournamentList
+	 */
+	public ObservableList<String> getActiveTournamentList()
+	{
+		return activeTournamentList;
+	}
+
+	public void viewTournament(String tournamentName, String ip, int port)
+	{
+		this.ipAddress = ip;
+		this.port = port;
+
+		client.spectateTournament(tournamentName, ip, port);
 		showActiveTournament();
 	}
-	
-	public void showTournament() {
-		
+
+	public void unviewTournament(String tournamentName, String ip, int port) throws Exception
+	{
+		moveList.clear();
+		showServerList();
 	}
-	
-	public void connectToServer(String ip, int port) {
-		
-		
+
+//	public void showTournament()
+//	{
+//		//could be useful later...?
+//	}
+
+	public void connectToServer(String ipAddress, int port) throws Exception
+	{
+
+		this.ipAddress = ipAddress;
+		this.port = port;
+		RestClient restclient = RestClient.create();
+		this.client = new UserClient(ipAddress, port, restclient);
+
+		activeTournamentList.add("Prisoner's Dilemma");
+		activeTournamentList.add("RR");
+
+		try
+		{
+			showServerList();
+
+		} catch (Exception e)
+		{
+			throw new Exception("Invalid");
+		}
+
 	}
-	
-	public void setNextMove(String move) {
+
+	public void setNextMove(String move)
+	{
 		moveList.add(move);
 	}
-	
-	public void resetList() {
+
+	public void resetList()
+	{
 		moveList.clear();
 		activeTournamentList.clear();
-		
+
 	}
 
 	@Override
 	public void showServerPicker()
 	{
-		// TODO Auto-generated method stub
-		
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(ConnectToServerController.class.getResource("../sprint3view/ConnectToServerView.fxml"));
+
+		Parent view;
+
+		try
+		{
+			view = loader.load();
+
+			ConnectToServerController cont = loader.getController();
+			cont.setModel(this);
+
+			Scene s = new Scene(view);
+			stage.setScene(s);
+
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
+	/**
+	 * switch the main view back to the list of available tournaments.
+	 */
 	@Override
-	public void showServerList()
+	public void showServerList() throws Exception
 	{
-		// TODO Auto-generated method stub
-		
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(TournamentListController.class.getResource("../sprint3view/TournamentListView.fxml"));
+
+		Parent view;
+
+		try
+		{
+			view = loader.load();
+
+			TournamentListController cont = loader.getController();
+			cont.setModel(this);
+
+			Scene s = new Scene(view);
+
+			stage.setScene(s);
+
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void showActiveTournament()
 	{
-		// TODO Auto-generated method stub
-		
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(ActiveTournamentController.class.getResource("../sprint3view/ActiveTournamentView.fxml"));
+
+		Parent view;
+
+		try
+		{
+			view = loader.load();
+
+			ActiveTournamentController cont = loader.getController();
+			cont.setModel(this);
+
+			Scene s = new Scene(view);
+			stage.setScene(s);
+
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
-	
-	
 }

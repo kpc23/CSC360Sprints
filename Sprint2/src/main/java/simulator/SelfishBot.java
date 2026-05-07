@@ -18,7 +18,7 @@ public class SelfishBot extends Participant
 	 * Selfish bot will return 1.
 	 */
 	@Override
-	int makeChoice(int actions)
+	public int makeChoice(int actions)
 	{
 		// TODO Auto-generated method stub
 		return 1;

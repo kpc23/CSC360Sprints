@@ -16,7 +16,7 @@ public class ResultsFileLogger extends Observer
 	}
 
 	@Override
-	void update(Subject subject)
+	public void update(Subject subject)
 	{
 		Game game = (Game) subject;
 		State s = game.currentState;

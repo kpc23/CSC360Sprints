@@ -1,26 +1,38 @@
 package sprint3view;
 
-import javax.swing.text.html.ListView;
-
 import javafx.fxml.FXML;
+import javafx.scene.control.ListView;
 import sprint3model.TournamentServerModel;
 
 public class TournamentListController
 {
-	@FXML ListView registerableTournamentList;
-	@FXML ListView activeTournamentList;
+	@FXML
+	ListView<String> registerableTournamentList;
+	@FXML
+	ListView<String> activeTournamentList;
 
 	TournamentServerModel model;
-	
-	public void setModel(TournamentServerModel tm) {
-		
+
+	public void setModel(TournamentServerModel tm)
+	{
+		this.model = tm;
+
+		activeTournamentList.setItems(model.getActiveTournamentList());
+		registerableTournamentList.setItems(model.getActiveTournamentList());
 	}
-	
-	public void onClickView() {
-		
+
+	public void onClickView()
+	{
+		String selected = activeTournamentList.getSelectionModel().getSelectedItem();
+
+		if (selected != null)
+		{
+			model.viewTournament(selected, model.getIp(), model.getPort());
+		}
 	}
-	
-	public void onClickBack() {
-		
+
+	public void onClickBack()
+	{
+		model.showServerPicker();
 	}
 }

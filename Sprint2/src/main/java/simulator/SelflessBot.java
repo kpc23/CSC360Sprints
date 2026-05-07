@@ -15,7 +15,7 @@ public class SelflessBot extends Participant
 	}
 
 	@Override
-	int makeChoice(int actions)
+	public int makeChoice(int actions)
 	{
 		// TODO Auto-generated method stub
 		return 0;

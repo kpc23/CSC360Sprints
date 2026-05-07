@@ -1,28 +1,28 @@
 package sprint3;
 
-import java.net.InetAddress;
-
 public class UserInfo
 {
-	InetAddress ip;
-	int port;
-	
+	public String ip;
+	public int port;
+
 	/**
-	 * @param ip
+	 * @param ipaddress
 	 * @param port
 	 */
-	public UserInfo(InetAddress ip, int port)
+	public UserInfo(String ipaddress, int port)
 	{
-		this.ip = ip;
+		this.ip = ipaddress;
 		this.port = port;
 	}
+
 	/**
 	 * @return the ip
 	 */
-	public InetAddress getIp()
+	public String getIp()
 	{
 		return ip;
 	}
+
 	/**
 	 * @return the port
 	 */
@@ -30,6 +30,5 @@ public class UserInfo
 	{
 		return port;
 	}
-	
-	
+
 }

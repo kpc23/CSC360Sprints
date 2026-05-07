@@ -13,17 +13,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import simulator.Tournament;
 import sprint3.MoveListener;
+import sprint3.UserInfo;
 
 /**
  * Tournaments can be added to the availableTournaments HashMap through the
  * addTournament() method, which takes the key-value pair arguments. Meanwhile,
  * TournamentServer’s main() is intended to launch the server
  * 
- * TournamentServer allows for tournaments to be set up and run by interacting 
- * solely with the TournamentServer class rather than directly calling each Tournament.
+ * TournamentServer allows for tournaments to be set up and run by interacting
+ * solely with the TournamentServer class rather than directly calling each
+ * Tournament.
  * 
- * The TournamentServer class acts as the central network server and manages 
- * a HashMap of Tournament objects. 
+ * The TournamentServer class acts as the central network server and manages a
+ * HashMap of Tournament objects.
  * 
  */
 @SpringBootApplication
@@ -31,15 +33,16 @@ import sprint3.MoveListener;
 public class TournamentServer
 {
 	/**
-	 * The key value is a String which acts as the Tournament’s title/label. 
-	 * A Tournament can be opened or closed for registration using the beginRegistration() 
-	 * and endRegistration() methods, which take an argument for the specific Tournament, accessible via HashMap.
+	 * The key value is a String which acts as the Tournament’s title/label. A
+	 * Tournament can be opened or closed for registration using the
+	 * beginRegistration() and endRegistration() methods, which take an argument for
+	 * the specific Tournament, accessible via HashMap.
 	 */
-	HashMap<String, Tournament> availableTournaments;
-	HashMap<Tournament, Boolean> registrationStatus; //true --- open, false -- closed
+	public HashMap<String, Tournament> availableTournaments;
+	public HashMap<Tournament, Boolean> registrationStatus; // true --- open, false -- closed
 
-	ArrayList<MoveListener> spectators; //sprint 3 implementation
-	
+	ArrayList<MoveListener> spectators; // sprint 3 implementation
+
 	public static void main(String[] args)
 	{
 		new SpringApplicationBuilder(TournamentServer.class)
@@ -47,7 +50,7 @@ public class TournamentServer
 				// .profiles("random")
 				.run(args);
 	}
-	
+
 	/**
 	 * constructor
 	 */
@@ -55,11 +58,12 @@ public class TournamentServer
 	{
 		availableTournaments = new HashMap<>();
 		registrationStatus = new HashMap<>();
+		spectators = new ArrayList<>();
 	}
-	
 
 	/**
 	 * Add tournaments for either registration or availability
+	 * 
 	 * @param str
 	 * @param tournament
 	 */
@@ -68,8 +72,6 @@ public class TournamentServer
 		availableTournaments.put(str, tournament);
 		registrationStatus.put(tournament, false);
 	}
-	
-	
 
 	/**
 	 * @return the availableTournaments
@@ -89,6 +91,7 @@ public class TournamentServer
 
 	/**
 	 * Begins registration phase
+	 * 
 	 * @param tournament
 	 */
 	public void beginRegistration(Tournament tournament)
@@ -99,6 +102,7 @@ public class TournamentServer
 
 	/**
 	 * Ends the registration phase
+	 * 
 	 * @param tournament
 	 */
 	public void endRegistration(Tournament tournament)
@@ -108,19 +112,20 @@ public class TournamentServer
 	}
 
 	/**
-	 * Users can remotely register for these tournaments using 
-	 * their IP address, name, and port information via the register() method.
+	 * Users can remotely register for these tournaments using their IP address,
+	 * name, and port information via the register() method.
 	 * 
 	 * @param ipaddress
 	 * @param playerName
 	 * @param port
 	 * @param tournamentName
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@GetMapping("/register/{ipaddress}/{port}/{tournamentName}/{playerName}")
-	public void register(@PathVariable String ipaddress, 
+	public void register(
+			@PathVariable String ipaddress, 
 			@PathVariable String playerName, 
-			@PathVariable int port, 
+			@PathVariable int port,
 			@PathVariable String tournamentName) throws Exception
 	{
 		Tournament t = availableTournaments.get(tournamentName);
@@ -139,13 +144,13 @@ public class TournamentServer
 				ipadd = InetAddress.getByName(ipaddress);
 				Proxy proxy = new Proxy(playerName, ipadd, port);
 				t.registerPlayer(proxy);
-				
+
 			} catch (UnknownHostException e)
 			{
 				// TODO Auto-generated catch block
 				throw new Exception("Invalid IP Address");
 			}
-			
+
 		} else
 		{
 			// if registration is closed
@@ -154,8 +159,8 @@ public class TournamentServer
 	}
 
 	/**
-	 * The method showTournament() displays a list of all tournaments 
-	 * currently in the registration phase
+	 * The method showTournament() displays a list of all tournaments currently in
+	 * the registration phase
 	 */
 	public void showTournament()
 	{
@@ -171,8 +176,8 @@ public class TournamentServer
 	}
 
 	/**
-	 * To begin a tournament, the playTournament() 
-	 * method calls play() from the Tournament passed.
+	 * To begin a tournament, the playTournament() method calls play() from the
+	 * Tournament passed.
 	 * 
 	 * @param tournament
 	 */
@@ -180,15 +185,57 @@ public class TournamentServer
 	{
 		tournament.playTournament();
 	}
-	
+
 	/**
 	 * Sprint 3 Implementations
 	 */
-	public void spectateTournament(String name, InetAddress ip, int port) {
+	@GetMapping("/spectate/{tournamentName}/{ipaddress}/{port}")
+	public void spectateTournament(
+			@PathVariable String tournamentName, 
+			@PathVariable String ipaddress, 
+			@PathVariable int port) throws Exception
+	{
+		Tournament t = availableTournaments.get(tournamentName);
+
+		if (t == null)
+		{
+			throw new Exception("Invalid Tournament");
+		}
+
+		//ip
 		
+		MoveListener listener = new MoveListener(new UserInfo(ipaddress, port));
+		t.game.register(listener);
+		spectators.add(listener);
 	}
-	
-	public void stopSpectateTournament(String name, InetAddress ip, int port) {
+
+	@GetMapping("/stopSpectate/{tournamentName}/{ipaddress}/{port}")
+	public void stopSpectateTournament(
+			@PathVariable String tournamentName, 
+			@PathVariable String ipaddress, 
+			@PathVariable int port) throws Exception
+	{
 		
+		Tournament t = availableTournaments.get(tournamentName);
+
+		if (t == null)
+		{
+			throw new Exception("Invalid Tournament");
+		}
+		
+		MoveListener rmListener = null;
+		
+		for(MoveListener ls: spectators) {
+			if(ls.getUserInfo().getIp().equals(ipaddress) && ls.getUserInfo().getPort() == port) {
+				rmListener = ls;
+				break;
+			}
+			
+			if(rmListener != null) {
+				t.game.deregister(rmListener);
+				spectators.remove(rmListener);
+			}
+		}
+
 	}
 }

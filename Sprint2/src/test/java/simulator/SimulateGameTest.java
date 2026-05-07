@@ -60,7 +60,7 @@ class SimulateGameTest
 		game.register(actionLogger);
 		game.register(resultsLogger);
 		game.play(p1, p2);
-		assertEquals(2, game.observers.size());
+		assertEquals(2, game.listeners.size());
 
 		assertEquals("Round " + (game.currentState.round + 1) + " PLAYER 1 ACTION = " + game.currentState.p1Action
 				+ " || PLAYER 2 ACTION = " + game.currentState.p2Action, actionLogger.getMessage());
@@ -69,7 +69,7 @@ class SimulateGameTest
 
 		game.deregister(actionLogger);
 		game.deregister(resultsLogger);
-		assertEquals(0, game.observers.size());
+		assertEquals(0, game.listeners.size());
 	}
 
 	/**

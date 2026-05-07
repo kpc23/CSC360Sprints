@@ -24,7 +24,7 @@ public class Proxy extends Participant
 	 */
 	public Proxy(String name, InetAddress ipaddress, int port)
 	{
-		super(name); 
+		super(name);
 		this.IPAddress = ipaddress;
 		this.port = port;
 		client = RestClient.create();
@@ -36,15 +36,10 @@ public class Proxy extends Participant
 	 */
 	public int makeChoice(int actions)
 	{
-		//need to revise... is url ok?
+		// need to revise... is url ok?
 		String url = "http://" + IPAddress + ":" + port + "/makeChoice/" + actions;
 
-		return Integer.parseInt(
-				client.get()
-				.uri(url)
-				.retrieve()
-				.body(String.class)
-				);
+		return Integer.parseInt(client.get().uri(url).retrieve().body(String.class));
 	}
 
 //	/**

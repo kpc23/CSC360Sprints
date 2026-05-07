@@ -5,9 +5,9 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.web.bind.annotation.*;
 
 import simulator.Participant;
+
 /**
- * RemoteServer utilizes the Strategy pattern 
- * to support remote player behavior.
+ * RemoteServer utilizes the Strategy pattern to support remote player behavior.
  */
 
 @SpringBootApplication
@@ -24,7 +24,7 @@ public class RemoteServerController
 				// .profiles("random")
 				.run(args);
 	}
-	
+
 	public void setParticipant(Participant participant)
 	{
 		participantType = participant;
@@ -33,7 +33,7 @@ public class RemoteServerController
 	@GetMapping("/makeChoice/{actions}")
 	public int makeChoice(@PathVariable int actions)
 	{
-		//should i add a try-catch?
+		// should i add a try-catch?
 		return participantType.makeChoice(actions);
-	}	
+	}
 }
