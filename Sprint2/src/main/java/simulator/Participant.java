@@ -15,7 +15,6 @@ public abstract class Participant
 		this.name = name;
 		this.memory = new ArrayList<>();
 	}
-	
 
 	/**
 	 * @return the name

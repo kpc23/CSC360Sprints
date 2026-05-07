@@ -13,8 +13,8 @@ public class Tournament
 	public Game game;
 	public Bracket bracketType;
 	public ArrayList<TourneyPlayer> scoreboard;
-	public boolean registrationOpen; //sprint 3 implementation
-	public boolean running; //sprint 3 implementation
+	public boolean registrationOpen; // sprint 3 implementation
+	public boolean running; // sprint 3 implementation
 
 	/**
 	 * @return the scoreboard
@@ -23,7 +23,7 @@ public class Tournament
 	{
 		return scoreboard;
 	}
-	
+
 	/**
 	 * @param scoreboard
 	 * @param game

@@ -20,6 +20,7 @@ public class MoveListener extends Observer
 	 */
 	State nextMove;
 	UserInfo userInfo; // stores ip and port of spectator.
+
 	/**
 	 * @return the userInfo
 	 */

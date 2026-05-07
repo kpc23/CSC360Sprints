@@ -79,11 +79,10 @@ class SimulateGameTest
 	void simulateGameMainTest()
 	{
 
-		SimulateGame sg = new SimulateGame();
 		String[] args = {};
 		assertDoesNotThrow(() ->
 		{
-			sg.main(args);
+			SimulateGame.main(args);
 		});
 	}
 

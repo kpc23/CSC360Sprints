@@ -1,6 +1,5 @@
 package sprint2;
 
-import java.net.InetAddress;
 import org.springframework.web.client.RestClient;
 
 import simulator.Participant;
@@ -11,7 +10,7 @@ import simulator.Participant;
  */
 public class Proxy extends Participant
 {
-	InetAddress IPAddress;
+	String IPAddress;
 	String name;
 	int port;
 	RestClient client;
@@ -22,7 +21,7 @@ public class Proxy extends Participant
 	 * @param name2
 	 * @param port
 	 */
-	public Proxy(String name, InetAddress ipaddress, int port)
+	public Proxy(String name, String ipaddress, int port)
 	{
 		super(name);
 		this.IPAddress = ipaddress;

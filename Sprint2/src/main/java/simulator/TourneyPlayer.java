@@ -22,6 +22,5 @@ public class TourneyPlayer
 	{
 		return player;
 	}
-	
-	
+
 }

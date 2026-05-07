@@ -10,6 +10,7 @@ public abstract class Game extends Subject
 {
 	int actions; // number actions players can choose
 	State currentState; // game current state
+
 	/**
 	 * @return the currentState
 	 */
@@ -19,14 +20,14 @@ public abstract class Game extends Subject
 	}
 
 	int roundsTaken; // counter for the number of rounds
-	int timeDelay; //sprint 3 implementation
+	int timeDelay; // sprint 3 implementation
+
 	/**
-	 * timeDelay specifies the number of seconds for which 
-	 * Thread.sleep() will occur between player 
-	 * actions in play(), which helps display 
-	 * each player move readably for spectators.
+	 * timeDelay specifies the number of seconds for which Thread.sleep() will occur
+	 * between player actions in play(), which helps display each player move
+	 * readably for spectators.
 	 */
-	
+
 	/**
 	 * Match play between two players
 	 * 

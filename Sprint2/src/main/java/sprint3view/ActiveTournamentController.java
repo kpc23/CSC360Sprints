@@ -8,7 +8,7 @@ public class ActiveTournamentController
 {
 	@FXML
 	ListView<String> moveList;
-	
+
 	TournamentServerModel model;
 
 	public void setModel(TournamentServerModel tm)

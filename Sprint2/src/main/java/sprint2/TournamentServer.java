@@ -1,7 +1,5 @@
 package sprint2;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -122,10 +120,7 @@ public class TournamentServer
 	 * @throws Exception
 	 */
 	@GetMapping("/register/{ipaddress}/{port}/{tournamentName}/{playerName}")
-	public void register(
-			@PathVariable String ipaddress, 
-			@PathVariable String playerName, 
-			@PathVariable int port,
+	public void register(@PathVariable String ipaddress, @PathVariable String playerName, @PathVariable int port,
 			@PathVariable String tournamentName) throws Exception
 	{
 		Tournament t = availableTournaments.get(tournamentName);
@@ -137,19 +132,8 @@ public class TournamentServer
 
 		if (registrationStatus.get(t))
 		{
-			// while reg is open..
-			InetAddress ipadd;
-			try
-			{
-				ipadd = InetAddress.getByName(ipaddress);
-				Proxy proxy = new Proxy(playerName, ipadd, port);
-				t.registerPlayer(proxy);
-
-			} catch (UnknownHostException e)
-			{
-				// TODO Auto-generated catch block
-				throw new Exception("Invalid IP Address");
-			}
+			Proxy proxy = new Proxy(playerName, ipaddress, port);
+			t.registerPlayer(proxy);
 
 		} else
 		{
@@ -190,9 +174,7 @@ public class TournamentServer
 	 * Sprint 3 Implementations
 	 */
 	@GetMapping("/spectate/{tournamentName}/{ipaddress}/{port}")
-	public void spectateTournament(
-			@PathVariable String tournamentName, 
-			@PathVariable String ipaddress, 
+	public void spectateTournament(@PathVariable String tournamentName, @PathVariable String ipaddress,
 			@PathVariable int port) throws Exception
 	{
 		Tournament t = availableTournaments.get(tournamentName);
@@ -202,36 +184,37 @@ public class TournamentServer
 			throw new Exception("Invalid Tournament");
 		}
 
-		//ip
-		
+		// ip
+
 		MoveListener listener = new MoveListener(new UserInfo(ipaddress, port));
 		t.game.register(listener);
 		spectators.add(listener);
 	}
 
 	@GetMapping("/stopSpectate/{tournamentName}/{ipaddress}/{port}")
-	public void stopSpectateTournament(
-			@PathVariable String tournamentName, 
-			@PathVariable String ipaddress, 
+	public void stopSpectateTournament(@PathVariable String tournamentName, @PathVariable String ipaddress,
 			@PathVariable int port) throws Exception
 	{
-		
+
 		Tournament t = availableTournaments.get(tournamentName);
 
 		if (t == null)
 		{
 			throw new Exception("Invalid Tournament");
 		}
-		
+
 		MoveListener rmListener = null;
-		
-		for(MoveListener ls: spectators) {
-			if(ls.getUserInfo().getIp().equals(ipaddress) && ls.getUserInfo().getPort() == port) {
+
+		for (MoveListener ls : spectators)
+		{
+			if (ls.getUserInfo().getIp().equals(ipaddress) && ls.getUserInfo().getPort() == port)
+			{
 				rmListener = ls;
 				break;
 			}
-			
-			if(rmListener != null) {
+
+			if (rmListener != null)
+			{
 				t.game.deregister(rmListener);
 				spectators.remove(rmListener);
 			}

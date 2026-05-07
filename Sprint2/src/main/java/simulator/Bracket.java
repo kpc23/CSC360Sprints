@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public abstract class Bracket
 {
 	ArrayList<TourneyPlayer> participantList;
-	
 
 	/**
 	 * @return the participantList
