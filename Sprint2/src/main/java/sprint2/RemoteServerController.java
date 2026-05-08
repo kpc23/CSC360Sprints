@@ -25,6 +25,22 @@ public class RemoteServerController
 				.run(args);
 	}
 
+	/**
+	 * @return the participantType
+	 */
+	public Participant getParticipantType()
+	{
+		return participantType;
+	}
+
+	/**
+	 * @param participantType the participantType to set
+	 */
+	public void setParticipantType(Participant participantType)
+	{
+		this.participantType = participantType;
+	}
+
 	public void setParticipant(Participant participant)
 	{
 		participantType = participant;

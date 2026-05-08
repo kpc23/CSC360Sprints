@@ -17,6 +17,78 @@ public class Tournament
 	public boolean running; // sprint 3 implementation
 
 	/**
+	 * @return the game
+	 */
+	public Game getGame()
+	{
+		return game;
+	}
+
+	/**
+	 * @param game the game to set
+	 */
+	public void setGame(Game game)
+	{
+		this.game = game;
+	}
+
+	/**
+	 * @return the bracketType
+	 */
+	public Bracket getBracketType()
+	{
+		return bracketType;
+	}
+
+	/**
+	 * @param bracketType the bracketType to set
+	 */
+	public void setBracketType(Bracket bracketType)
+	{
+		this.bracketType = bracketType;
+	}
+
+	/**
+	 * @return the registrationOpen
+	 */
+	public boolean isRegistrationOpen()
+	{
+		return registrationOpen;
+	}
+
+	/**
+	 * @param registrationOpen the registrationOpen to set
+	 */
+	public void setRegistrationOpen(boolean registrationOpen)
+	{
+		this.registrationOpen = registrationOpen;
+	}
+
+	/**
+	 * @return the running
+	 */
+	public boolean isRunning()
+	{
+		return running;
+	}
+
+	/**
+	 * @param running the running to set
+	 */
+	public void setRunning(boolean running)
+	{
+		this.running = running;
+	}
+
+	/**
+	 * @param scoreboard the scoreboard to set
+	 */
+	public void setScoreboard(ArrayList<TourneyPlayer> scoreboard)
+	{
+		this.scoreboard = scoreboard;
+	}
+
+	/**
 	 * @return the scoreboard
 	 */
 	public ArrayList<TourneyPlayer> getScoreboard()

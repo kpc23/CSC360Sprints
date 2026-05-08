@@ -52,6 +52,22 @@ public class UserClient
 	{
 		this.port = port;
 	}
+	
+	/**
+	 * @return the client
+	 */
+	public RestClient getClient()
+	{
+		return client;
+	}
+
+	/**
+	 * @param client the client to set
+	 */
+	public void setClient(RestClient client)
+	{
+		this.client = client;
+	}
 
 	public void spectateTournament(String tourName, String ipAddress, int port)
 	{

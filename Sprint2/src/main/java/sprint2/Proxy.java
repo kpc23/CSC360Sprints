@@ -1,7 +1,6 @@
 package sprint2;
 
 import org.springframework.web.client.RestClient;
-
 import simulator.Participant;
 
 /**
@@ -30,6 +29,72 @@ public class Proxy extends Participant
 	}
 
 	/**
+	 * @return the iPAddress
+	 */
+	public String getIPAddress()
+	{
+		return IPAddress;
+	}
+
+	/**
+	 * @param iPAddress the iPAddress to set
+	 */
+	public void setIPAddress(String iPAddress)
+	{
+		IPAddress = iPAddress;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName()
+	{
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+
+
+
+	/**
+	 * @return the port
+	 */
+	public int getPort()
+	{
+		return port;
+	}
+
+	/**
+	 * @param port the port to set
+	 */
+	public void setPort(int port)
+	{
+		this.port = port;
+	}
+
+	/**
+	 * @return the client
+	 */
+	public RestClient getClient()
+	{
+		return client;
+	}
+
+	/**
+	 * @param client the client to set
+	 */
+	public void setClient(RestClient client)
+	{
+		this.client = client;
+	}
+
+	/**
 	 * Proxy uses a RestClient to perform a GET request to the user's RemoteServer.
 	 * 
 	 */
@@ -40,20 +105,4 @@ public class Proxy extends Participant
 
 		return Integer.parseInt(client.get().uri(url).retrieve().body(String.class));
 	}
-
-//	/**
-//	 * The Proxy will perform a PUT to the RemoteServer 
-//	 * so that the remote Participant may update its memory attribute, 
-//	 * using this function updateMemory().
-//	 * 
-//	 *  intended to translate the stored data in a State class to pass to 
-//	 *  the RemoteServer’s Participant. 
-//	 *  
-//	 * @param state has p1 and p2 name, score, and action for each.
-//	 */
-//	public void updateMemory(State state)
-//	{
-//		//need to revise -- unsure how to implement put
-//		client.put().body(state).retrieve();
-//	}
 }

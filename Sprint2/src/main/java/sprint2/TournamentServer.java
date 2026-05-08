@@ -60,6 +60,38 @@ public class TournamentServer
 	}
 
 	/**
+	 * @return the registrationStatus
+	 */
+	public HashMap<Tournament, Boolean> getRegistrationStatus()
+	{
+		return registrationStatus;
+	}
+
+	/**
+	 * @param registrationStatus the registrationStatus to set
+	 */
+	public void setRegistrationStatus(HashMap<Tournament, Boolean> registrationStatus)
+	{
+		this.registrationStatus = registrationStatus;
+	}
+
+	/**
+	 * @return the spectators
+	 */
+	public ArrayList<MoveListener> getSpectators()
+	{
+		return spectators;
+	}
+
+	/**
+	 * @param spectators the spectators to set
+	 */
+	public void setSpectators(ArrayList<MoveListener> spectators)
+	{
+		this.spectators = spectators;
+	}
+
+	/**
 	 * Add tournaments for either registration or availability
 	 * 
 	 * @param str

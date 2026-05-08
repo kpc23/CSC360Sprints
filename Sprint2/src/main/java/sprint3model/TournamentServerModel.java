@@ -94,6 +94,54 @@ public class TournamentServerModel implements ViewTransitionalModelInterface
 	{
 		return activeTournamentList;
 	}
+	
+	/**
+	 * @return the stage
+	 */
+	public Stage getStage()
+	{
+		return stage;
+	}
+
+	/**
+	 * @param stage the stage to set
+	 */
+	public void setStage(Stage stage)
+	{
+		this.stage = stage;
+	}
+
+	/**
+	 * @return the ipAddress
+	 */
+	public String getIpAddress()
+	{
+		return ipAddress;
+	}
+
+	/**
+	 * @param ipAddress the ipAddress to set
+	 */
+	public void setIpAddress(String ipAddress)
+	{
+		this.ipAddress = ipAddress;
+	}
+
+	/**
+	 * @param moveList the moveList to set
+	 */
+	public void setMoveList(ObservableList<String> moveList)
+	{
+		this.moveList = moveList;
+	}
+
+	/**
+	 * @param activeTournamentList the activeTournamentList to set
+	 */
+	public void setActiveTournamentList(ObservableList<String> activeTournamentList)
+	{
+		this.activeTournamentList = activeTournamentList;
+	}
 
 	public void viewTournament(String tournamentName, String ip, int port)
 	{

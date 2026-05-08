@@ -31,4 +31,22 @@ public class UserInfo
 		return port;
 	}
 
+	/**
+	 * @param ip the ip to set
+	 */
+	public void setIp(String ip)
+	{
+		this.ip = ip;
+	}
+
+	/**
+	 * @param port the port to set
+	 */
+	public void setPort(int port)
+	{
+		this.port = port;
+	}
+	
+	
+
 }

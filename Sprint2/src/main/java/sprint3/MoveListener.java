@@ -20,15 +20,6 @@ public class MoveListener extends Observer
 	 */
 	State nextMove;
 	UserInfo userInfo; // stores ip and port of spectator.
-
-	/**
-	 * @return the userInfo
-	 */
-	public UserInfo getUserInfo()
-	{
-		return userInfo;
-	}
-
 	RestClient client; // this way client can send updates to appropriate location.
 
 	/**
@@ -41,6 +32,55 @@ public class MoveListener extends Observer
 		this.userInfo = userInfo;
 		this.client = RestClient.create("http://" + userInfo.getIp() + ":" + userInfo.getPort());
 
+	}
+	
+	/**
+	 * @return the userInfo
+	 */
+	public UserInfo getUserInfo()
+	{
+		return userInfo;
+	}
+	
+	
+	/**
+	 * @return the nextMove
+	 */
+	public State getNextMove()
+	{
+		return nextMove;
+	}
+
+	/**
+	 * @param nextMove the nextMove to set
+	 */
+	public void setNextMove(State nextMove)
+	{
+		this.nextMove = nextMove;
+	}
+
+	/**
+	 * @return the client
+	 */
+	public RestClient getClient()
+	{
+		return client;
+	}
+
+	/**
+	 * @param client the client to set
+	 */
+	public void setClient(RestClient client)
+	{
+		this.client = client;
+	}
+
+	/**
+	 * @param userInfo the userInfo to set
+	 */
+	public void setUserInfo(UserInfo userInfo)
+	{
+		this.userInfo = userInfo;
 	}
 
 	@Override

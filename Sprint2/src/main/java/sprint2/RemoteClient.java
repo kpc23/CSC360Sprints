@@ -28,6 +28,54 @@ public class RemoteClient
 	}
 
 	/**
+	 * @return the client
+	 */
+	public RestClient getClient()
+	{
+		return client;
+	}
+
+	/**
+	 * @param client the client to set
+	 */
+	public void setClient(RestClient client)
+	{
+		this.client = client;
+	}
+
+	/**
+	 * @return the serverAddress
+	 */
+	public String getServerAddress()
+	{
+		return serverAddress;
+	}
+
+	/**
+	 * @param serverAddress the serverAddress to set
+	 */
+	public void setServerAddress(String serverAddress)
+	{
+		this.serverAddress = serverAddress;
+	}
+
+	/**
+	 * @return the serverPort
+	 */
+	public int getServerPort()
+	{
+		return serverPort;
+	}
+
+	/**
+	 * @param serverPort the serverPort to set
+	 */
+	public void setServerPort(int serverPort)
+	{
+		this.serverPort = serverPort;
+	}
+
+	/**
 	 * RemoteClient uses a RestClient to send GET requests to the origin
 	 * TournamentServer.
 	 * 
