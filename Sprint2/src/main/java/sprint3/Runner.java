@@ -9,15 +9,15 @@ public class Runner extends Application
 	@Override
 	public void start(Stage stage) throws Exception
 	{
-			TournamentServerModel model = new TournamentServerModel(stage);
-			model.showServerPicker();
-			
-			stage.show();
+		TournamentServerModel model = new TournamentServerModel(stage);
+		model.showServerPicker();
+
+		stage.show();
 
 	}
-	
+
 	public static void main(String[] args)
-	{		
+	{
 		launch(args);
 	}
 

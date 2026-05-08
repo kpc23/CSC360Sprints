@@ -64,14 +64,14 @@ public class ConnectToServerViewTest
 	{
 		robot.clickOn("#ConnectToServerButton");
 	}
-	
+
 	@Test
 	public void testDisplayAndTextFields(FxRobot robot)
 	{
-		
+
 		enterIpAddress(robot, "localhost");
 		enterPortNumber(robot, String.valueOf("9000"));
-		
+
 		Assertions.assertThat(robot.lookup("#IPTextField").queryAs(TextField.class)).hasText("localhost");
 
 		Assertions.assertThat(robot.lookup("#PortNumberTextField").queryAs(TextField.class)).hasText("9000");
@@ -80,31 +80,28 @@ public class ConnectToServerViewTest
 
 		WaitForAsyncUtils.waitForFxEvents();
 
-		
 		ListView<?> lv = robot.lookup("#tournamentListView").queryAs(ListView.class);
 		Assertions.assertThat(lv).isVisible();
 	}
 
-	
 	@Test
 	public void testBadPortDisplayAndTextFields(FxRobot robot)
 	{
-		
+
 		enterIpAddress(robot, "localhost");
 		enterPortNumber(robot, String.valueOf("invalid"));
-		
+
 		pressConnectToServerButton(robot);
 
 		WaitForAsyncUtils.waitForFxEvents();
-		
+
 		Assertions.assertThat(robot.lookup("#IPTextField").queryAs(TextField.class)).hasText("localhost");
 
 		Assertions.assertThat(robot.lookup("#PortNumberTextField").queryAs(TextField.class)).hasText("invalid");
 
-		//should not switch views with invlid port
+		// should not switch views with invlid port
 	}
-	
-	
+
 //	@Test
 //	public void checkIfListViewHasElements(FxRobot robot) throws Exception
 //	{

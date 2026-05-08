@@ -73,7 +73,7 @@ public abstract class Game extends Subject
 	 */
 	public void setTimeDelay(int timeDelay)
 	{
-		this.timeDelay = timeDelay*1000;
+		this.timeDelay = timeDelay * 1000;
 	}
 
 	/**
@@ -120,7 +120,7 @@ public abstract class Game extends Subject
 			p2.addMemory(state);
 			hook();
 			notifyObservers();
-			
+
 			try
 			{
 				Thread.sleep(timeDelay);

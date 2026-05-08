@@ -16,10 +16,10 @@ import sprint3model.TournamentServerModel;
 @ExtendWith(ApplicationExtension.class)
 class ActiveTournamentViewTest
 {
-	
+
 	TournamentServerModel model;
-	
-	@Start 
+
+	@Start
 	private void start(Stage stage)
 	{
 		model = new TournamentServerModel(stage);
@@ -27,40 +27,41 @@ class ActiveTournamentViewTest
 
 		stage.show();
 	}
-	
-	//back button 
+
+	// back button
 	void pressBackToTournamentListButton(FxRobot robot)
 	{
 		robot.sleep(1000);
 
 		robot.clickOn("#BackToTournamentListButton");
 	}
-	
-	
+
 	@Test
 	public void testDisplay(FxRobot robot)
-	{		
+	{
 		robot.sleep(1000);
 
 		ListView<?> lv = robot.lookup("#ActionsListView").queryAs(ListView.class);
 		Assertions.assertThat(lv).hasExactlyNumItems(0);
-		
-		Platform.runLater(()->{
 
-			model.getMoveList().add("Round 1: Player 1 -> 1");	
-		
+		Platform.runLater(() ->
+		{
+
+			model.getMoveList().add("Round 1: Player 1 -> 1");
+
 		});
-		
+
 		WaitForAsyncUtils.waitForFxEvents();
-		
+
 		Assertions.assertThat(lv).hasExactlyNumItems(1);
-		
+
 		robot.sleep(1000);
 
-		Platform.runLater(()->{
+		Platform.runLater(() ->
+		{
 
-			model.getMoveList().add("Round 1: Player 2 -> 0");	
-		
+			model.getMoveList().add("Round 1: Player 2 -> 0");
+
 		});
 
 		WaitForAsyncUtils.waitForFxEvents();
@@ -70,20 +71,19 @@ class ActiveTournamentViewTest
 		Assertions.assertThat(lv).hasListCell("Round 1: Player 1 -> 1");
 		Assertions.assertThat(lv).hasListCell("Round 1: Player 2 -> 0");
 	}
-	
-	
+
 	@Test
 	public void testBackButton(FxRobot robot)
 	{
 		robot.sleep(1000);
 
 		pressBackToTournamentListButton(robot);
-		
+
 		WaitForAsyncUtils.waitForFxEvents();
 
 		ListView<?> lv = robot.lookup("#tournamentListView").queryAs(ListView.class);
 		Assertions.assertThat(lv).isVisible();
 
 	}
-	
+
 }

@@ -16,7 +16,7 @@ public class HumanParticipant extends Participant
 	{
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Enter action out of " + (actions - 1) + ": ");
-		
+
 		int chosenAction = scan.nextInt();
 
 		while (chosenAction >= actions || chosenAction < 0)
@@ -24,6 +24,8 @@ public class HumanParticipant extends Participant
 			System.out.println("Not a valid choice. Try Again: ");
 			chosenAction = scan.nextInt();
 		}
+
+		scan.close();
 
 		return chosenAction;
 	}

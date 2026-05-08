@@ -60,8 +60,6 @@ public class Proxy extends Participant
 		this.name = name;
 	}
 
-
-
 	/**
 	 * @return the port
 	 */

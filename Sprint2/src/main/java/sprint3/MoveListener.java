@@ -33,7 +33,7 @@ public class MoveListener extends Observer
 		this.client = RestClient.create("http://" + userInfo.getIp() + ":" + userInfo.getPort());
 
 	}
-	
+
 	/**
 	 * @return the userInfo
 	 */
@@ -41,8 +41,7 @@ public class MoveListener extends Observer
 	{
 		return userInfo;
 	}
-	
-	
+
 	/**
 	 * @return the nextMove
 	 */

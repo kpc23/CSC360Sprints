@@ -94,7 +94,7 @@ public class TournamentServerModel implements ViewTransitionalModelInterface
 	{
 		return activeTournamentList;
 	}
-	
+
 	/**
 	 * @return the stage
 	 */
@@ -148,7 +148,8 @@ public class TournamentServerModel implements ViewTransitionalModelInterface
 		this.ipAddress = ip;
 		this.port = port;
 
-		if(client!=null) {
+		if (client != null)
+		{
 			client.spectateTournament(tournamentName, ip, port);
 
 		}

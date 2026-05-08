@@ -14,7 +14,7 @@ public class TourneyPlayer
 		this.totalScore = 0;
 		this.playersPlayed = new ArrayList<>();
 	}
-	
+
 	/**
 	 * @return the totalScore
 	 */
@@ -22,7 +22,7 @@ public class TourneyPlayer
 	{
 		return totalScore;
 	}
-	
+
 	/**
 	 * @param totalScore the totalScore to set
 	 */
