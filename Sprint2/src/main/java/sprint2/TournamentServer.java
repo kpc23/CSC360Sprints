@@ -185,7 +185,6 @@ public class TournamentServer
 		}
 
 		// ip
-
 		MoveListener listener = new MoveListener(new UserInfo(ipaddress, port));
 		t.game.register(listener);
 		spectators.add(listener);
