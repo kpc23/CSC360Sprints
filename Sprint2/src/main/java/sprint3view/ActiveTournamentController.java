@@ -7,14 +7,14 @@ import sprint3model.TournamentServerModel;
 public class ActiveTournamentController
 {
 	@FXML
-	ListView<String> moveList;
+	ListView<String> ActionsListView;
 
 	TournamentServerModel model;
 
 	public void setModel(TournamentServerModel tm)
 	{
 		this.model = tm;
-		moveList.setItems(model.getMoveList());
+		ActionsListView.setItems(model.getMoveList());
 	}
 
 	public void onClickBack()

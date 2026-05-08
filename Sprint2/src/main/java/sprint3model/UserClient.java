@@ -55,7 +55,8 @@ public class UserClient
 
 	public void spectateTournament(String tourName, String ipAddress, int port)
 	{
-		String url = "http://" + this.ip + ":" + this.port + "/spectate/" + tourName + "/" + port;
+		String url = "http://" + this.ip + ":" + this.port + "/spectate/" 
+				+ tourName + "/" + ipAddress + "/" + port;
 
 		client.get().uri(url).retrieve().body(String.class);
 	}

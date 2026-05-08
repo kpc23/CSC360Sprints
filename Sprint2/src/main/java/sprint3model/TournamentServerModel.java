@@ -100,7 +100,10 @@ public class TournamentServerModel implements ViewTransitionalModelInterface
 		this.ipAddress = ip;
 		this.port = port;
 
-		client.spectateTournament(tournamentName, ip, port);
+		if(client!=null) {
+			client.spectateTournament(tournamentName, ip, port);
+
+		}
 		showActiveTournament();
 	}
 
@@ -122,9 +125,6 @@ public class TournamentServerModel implements ViewTransitionalModelInterface
 		this.port = port;
 		RestClient restclient = RestClient.create();
 		this.client = new UserClient(ipAddress, port, restclient);
-
-		activeTournamentList.add("Prisoner's Dilemma");
-		activeTournamentList.add("RR");
 
 		try
 		{

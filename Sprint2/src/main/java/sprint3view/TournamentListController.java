@@ -7,9 +7,7 @@ import sprint3model.TournamentServerModel;
 public class TournamentListController
 {
 	@FXML
-	ListView<String> registerableTournamentList;
-	@FXML
-	ListView<String> activeTournamentList;
+	ListView<String> tournamentListView;
 
 	TournamentServerModel model;
 
@@ -17,13 +15,12 @@ public class TournamentListController
 	{
 		this.model = tm;
 
-		activeTournamentList.setItems(model.getActiveTournamentList());
-		registerableTournamentList.setItems(model.getActiveTournamentList());
+		tournamentListView.setItems(model.getActiveTournamentList());
 	}
 
 	public void onClickView()
 	{
-		String selected = activeTournamentList.getSelectionModel().getSelectedItem();
+		String selected = tournamentListView.getSelectionModel().getSelectedItem();
 
 		if (selected != null)
 		{

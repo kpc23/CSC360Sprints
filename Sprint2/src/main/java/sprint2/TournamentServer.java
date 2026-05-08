@@ -213,12 +213,12 @@ public class TournamentServer
 				break;
 			}
 
-			if (rmListener != null)
-			{
-				t.game.deregister(rmListener);
-				spectators.remove(rmListener);
-			}
 		}
 
+		if (rmListener != null)
+		{
+			t.game.deregister(rmListener);
+			spectators.remove(rmListener);
+		}
 	}
 }

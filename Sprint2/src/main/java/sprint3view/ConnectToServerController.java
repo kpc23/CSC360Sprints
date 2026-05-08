@@ -7,9 +7,9 @@ import sprint3model.TournamentServerModel;
 public class ConnectToServerController
 {
 	@FXML
-	TextField ipAddress;
+	TextField IPTextField;
 	@FXML
-	TextField portNumber;
+	TextField PortNumberTextField;
 
 	TournamentServerModel model;
 
@@ -26,7 +26,7 @@ public class ConnectToServerController
 
 		try
 		{
-			model.connectToServer(ipAddress.getText(), Integer.parseInt(portNumber.getText()));
+			model.connectToServer(IPTextField.getText(), Integer.parseInt(PortNumberTextField.getText()));
 
 		} catch (Exception e)
 		{

@@ -29,6 +29,62 @@ public abstract class Game extends Subject
 	 */
 
 	/**
+	 * @return the actions
+	 */
+	public int getActions()
+	{
+		return actions;
+	}
+
+	/**
+	 * @param actions the actions to set
+	 */
+	public void setActions(int actions)
+	{
+		this.actions = actions;
+	}
+
+	/**
+	 * @return the roundsTaken
+	 */
+	public int getRoundsTaken()
+	{
+		return roundsTaken;
+	}
+
+	/**
+	 * @param roundsTaken the roundsTaken to set
+	 */
+	public void setRoundsTaken(int roundsTaken)
+	{
+		this.roundsTaken = roundsTaken;
+	}
+
+	/**
+	 * @return the timeDelay
+	 */
+	public int getTimeDelay()
+	{
+		return timeDelay;
+	}
+
+	/**
+	 * @param timeDelay the timeDelay to set
+	 */
+	public void setTimeDelay(int timeDelay)
+	{
+		this.timeDelay = timeDelay*1000;
+	}
+
+	/**
+	 * @param currentState the currentState to set
+	 */
+	public void setCurrentState(State currentState)
+	{
+		this.currentState = currentState;
+	}
+
+	/**
 	 * Match play between two players
 	 * 
 	 * @param p1 - player 1
@@ -64,6 +120,15 @@ public abstract class Game extends Subject
 			p2.addMemory(state);
 			hook();
 			notifyObservers();
+			
+			try
+			{
+				Thread.sleep(timeDelay);
+			} catch (InterruptedException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			roundsTaken++;
 
 		}
