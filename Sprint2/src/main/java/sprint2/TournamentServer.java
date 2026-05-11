@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import simulator.Tournament;
 import sprint3.MoveListener;
 import sprint3.UserInfo;
+import sprint4.TournamentInfo;
 
 /**
  * Tournaments can be added to the availableTournaments HashMap through the
@@ -36,10 +37,9 @@ public class TournamentServer
 	 * beginRegistration() and endRegistration() methods, which take an argument for
 	 * the specific Tournament, accessible via HashMap.
 	 */
-	public HashMap<String, Tournament> availableTournaments;
-	public HashMap<Tournament, Boolean> registrationStatus; // true --- open, false -- closed
-
-	ArrayList<MoveListener> spectators; // sprint 3 implementation
+	public static HashMap<String, Tournament> availableTournaments = new HashMap<>();
+	public static HashMap<Tournament, Boolean> registrationStatus = new HashMap<>(); // true --- open, false -- closed
+	public static ArrayList<MoveListener> spectators = new ArrayList<>(); // sprint 3 implementation
 
 	public static void main(String[] args)
 	{
@@ -50,19 +50,9 @@ public class TournamentServer
 	}
 
 	/**
-	 * constructor
-	 */
-	public TournamentServer()
-	{
-		availableTournaments = new HashMap<>();
-		registrationStatus = new HashMap<>();
-		spectators = new ArrayList<>();
-	}
-
-	/**
 	 * @return the registrationStatus
 	 */
-	public HashMap<Tournament, Boolean> getRegistrationStatus()
+	public static HashMap<Tournament, Boolean> getRegistrationStatus()
 	{
 		return registrationStatus;
 	}
@@ -94,12 +84,13 @@ public class TournamentServer
 	/**
 	 * Add tournaments for either registration or availability
 	 * 
-	 * @param str
+	 * @param tournamentName
 	 * @param tournament
 	 */
-	public void addTournament(String str, Tournament tournament)
+	public void addTournament(String tournamentName, Tournament tournament)
 	{
-		availableTournaments.put(str, tournament);
+		tournament.setName(tournamentName);
+		availableTournaments.put(tournamentName, tournament);
 		registrationStatus.put(tournament, false);
 	}
 
@@ -127,6 +118,7 @@ public class TournamentServer
 	public void beginRegistration(Tournament tournament)
 	{
 		registrationStatus.put(tournament, true);
+		tournament.setRegistrationOpen(true);
 
 	}
 
@@ -138,9 +130,25 @@ public class TournamentServer
 	public void endRegistration(Tournament tournament)
 	{
 		registrationStatus.put(tournament, false);
+		tournament.setRegistrationOpen(false);
 
 	}
 
+	@GetMapping("/tournaments")
+	public ArrayList<TournamentInfo> getTournaments(){
+		ArrayList<TournamentInfo> tournaments = new ArrayList<>();
+		
+		for(Tournament t: availableTournaments.values()) {
+			tournaments.add(new TournamentInfo(
+					t.getName(),
+					t.isRegistrationOpen(),
+					t.isRunning()
+					));
+		}
+		
+		return tournaments;
+	}
+	
 	/**
 	 * Users can remotely register for these tournaments using their IP address,
 	 * name, and port information via the register() method.
@@ -191,6 +199,16 @@ public class TournamentServer
 		}
 	}
 
+	@GetMapping("/beginTournament/{tournamentName}")
+	public void beginClientTournament(@PathVariable String tournamentName) throws Exception
+	{
+		Tournament t = availableTournaments.get(tournamentName);
+		if(t == null) {
+			throw new Exception("invalid");
+		}
+		beginTournament(t);
+	}
+	
 	/**
 	 * To begin a tournament, the playTournament() method calls play() from the
 	 * Tournament passed.
@@ -199,7 +217,9 @@ public class TournamentServer
 	 */
 	public void beginTournament(Tournament tournament)
 	{
+		tournament.setRunning(true);
 		tournament.playTournament();
+		tournament.setRunning(false);
 	}
 
 	/**

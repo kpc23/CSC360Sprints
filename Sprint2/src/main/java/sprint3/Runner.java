@@ -10,10 +10,15 @@ public class Runner extends Application
 	public void start(Stage stage) throws Exception
 	{
 		TournamentServerModel model = new TournamentServerModel(stage);
+		ActionsViewerReciever.setModel(model);
+		
+		new org.springframework.boot.builder
+		.SpringApplicationBuilder(ActionsViewerReciever.class)
+		.properties("server.port=9000").run();
+		
 		model.showServerPicker();
 
 		stage.show();
-
 	}
 
 	public static void main(String[] args)

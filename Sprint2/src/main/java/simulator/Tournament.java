@@ -16,6 +16,31 @@ public class Tournament
 	public boolean registrationOpen; // sprint 3 implementation
 	public boolean running; // sprint 3 implementation
 
+	String name;
+	
+	
+	@Override
+	public String toString()
+	{
+		return "Tournament: " + name;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName()
+	{
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+
 	/**
 	 * @return the game
 	 */

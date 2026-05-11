@@ -83,27 +83,4 @@ class RemoteServerControllerTest
 		assertEquals(0, result);
 	}
 
-//	@Test
-//	void testRegister()
-//	{
-//		ArrayList<TourneyPlayer> scoreboard = new ArrayList<>();
-//		Game game = new IteratedPrisonersDilemma(5);
-//		Bracket bracket = new RoundRobinBracket(scoreboard);
-//		Tournament t1 = new Tournament(scoreboard, game, bracket);
-//		
-//		tServer.addTournament("tour1", t1);
-//		tServer.beginRegistration(t1);
-//		
-//		RemoteClient client = new RemoteClient("http://localhost", port);
-//		
-//		client.registerForTournament("localhost", port, "tour1", "karla");
-//		//check tournament is registered and that player name is too. 
-//		assertEquals(1, t1.scoreboard.size());
-//		assertTrue(tServer.getAvailableTournaments().containsKey("tour1"));
-//		assertEquals("karla", t1.scoreboard.get(0).player.name); ///use loop k
-//		
-//		
-//		
-//	}
-
 }

@@ -2,6 +2,8 @@ package sprint3model;
 
 import org.springframework.web.client.RestClient;
 
+import sprint4.TournamentInfo;
+
 public class UserClient
 {
 	public String ip;
@@ -21,7 +23,15 @@ public class UserClient
 		this.client = client;
 	}
 
-	/**
+	public TournamentInfo[] getTournaments() {
+	
+		String url = "http://" + this.ip + ":" + this.port + "/tournaments";
+
+		return client.get().uri(url).retrieve().body(TournamentInfo[].class);
+		
+	}
+	
+	/**e
 	 * @return the ip
 	 */
 	public String getIp()
@@ -82,5 +92,13 @@ public class UserClient
 
 		client.get().uri(url).retrieve().body(String.class);
 	}
+	
+	public void beginTournament(String tourName)
+	{
+		String url = "http://" + this.ip + ":" + this.port + "/beginTournament/" + tourName;
+				
+		client.get().uri(url).retrieve().body(String.class);
+	}
+	
 
 }

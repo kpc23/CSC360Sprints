@@ -14,7 +14,7 @@ public class ActiveTournamentController
 	public void setModel(TournamentServerModel tm)
 	{
 		this.model = tm;
-		ActionsListView.setItems(model.getMoveList());
+		ActionsListView.setItems(model.getActionsMoveList());
 	}
 
 	public void onClickBack()

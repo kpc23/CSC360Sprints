@@ -47,7 +47,7 @@ class ActiveTournamentViewTest
 		Platform.runLater(() ->
 		{
 
-			model.getMoveList().add("Round 1: Player 1 -> 1");
+			model.getActionsMoveList().add("Round 1: Player 1 -> 1");
 
 		});
 
@@ -60,7 +60,7 @@ class ActiveTournamentViewTest
 		Platform.runLater(() ->
 		{
 
-			model.getMoveList().add("Round 1: Player 2 -> 0");
+			model.getActionsMoveList().add("Round 1: Player 2 -> 0");
 
 		});
 
