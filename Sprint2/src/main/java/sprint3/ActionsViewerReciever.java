@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javafx.application.Platform;
 import sprint3model.TournamentServerModel;
-//moves/actions reciever endpoint 
+//moves/actions receiver endpoint 
 @SpringBootApplication
 @RestController
 public class ActionsViewerReciever

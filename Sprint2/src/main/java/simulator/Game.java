@@ -103,6 +103,10 @@ public abstract class Game extends Subject
 		p1.clearMemory();
 		p2.clearMemory();
 
+		currentState.p1Name = p1.getName();
+		currentState.p2Name = p2.getName();
+
+		
 		while (!endGame())
 		{
 			currentState.round = roundsTaken;

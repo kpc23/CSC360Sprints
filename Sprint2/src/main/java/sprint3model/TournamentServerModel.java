@@ -11,7 +11,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import simulator.Tournament;
 import sprint3.ViewTransitionalModelInterface;
 import sprint3view.ActiveTournamentController;
 import sprint3view.ConnectToServerController;
@@ -27,6 +26,7 @@ public class TournamentServerModel implements ViewTransitionalModelInterface
 	Stage stage;
 	int port;
 	String ipAddress;
+	String currentTournamentSpectating;
 
 	public TournamentServerModel(Stage stage)
 	{
@@ -41,6 +41,22 @@ public class TournamentServerModel implements ViewTransitionalModelInterface
 	public UserClient getClient()
 	{
 		return client;
+	}
+
+	/**
+	 * @return the currentTournamentSpectating Name
+	 */
+	public String getCurrentTournamentSpectating()
+	{
+		return currentTournamentSpectating;
+	}
+
+	/**
+	 * @param currentTournamentSpectating the currentTournamentSpectating to set
+	 */
+	public void setCurrentTournamentSpectating(String currentTournamentSpectating)
+	{
+		this.currentTournamentSpectating = currentTournamentSpectating;
 	}
 
 	/**
@@ -151,25 +167,38 @@ public class TournamentServerModel implements ViewTransitionalModelInterface
 	{
 		this.ipAddress = ip;
 		this.port = port;
+		actionsMoveList.clear();
 
 		if (client != null)
 		{
 			client.spectateTournament(tournamentName, "localhost", 9000);
 
 		}
+
+		this.setCurrentTournamentSpectating(tournamentName);
 		showActiveTournament();
-		
+
 		if (client != null)
 		{
-			client.beginTournament(tournamentName);
+			new Thread(() ->
+			{
+				client.beginTournament(tournamentName);
+			}).start();
 
 		}
-		
+
 	}
 
 	public void unviewTournament(String tournamentName, String ip, int port) throws Exception
 	{
+		if (client != null && currentTournamentSpectating != null)
+		{
+			client.unspectateTournament(currentTournamentSpectating, "localhost", 9000);
+
+		}
+
 		actionsMoveList.clear();
+		currentTournamentSpectating = null;
 		showServerList();
 	}
 
@@ -208,17 +237,18 @@ public class TournamentServerModel implements ViewTransitionalModelInterface
 		allTournamentsList.clear();
 
 	}
-	
-	public void tournamentsFromServer() {
+
+	public void tournamentsFromServer()
+	{
 		TournamentInfo[] tournaments = client.getTournaments();
-		
+
 		allTournamentsList.clear();
-		
-		for(TournamentInfo t : tournaments) {
+
+		for (TournamentInfo t : tournaments)
+		{
 			allTournamentsList.add(t);
 		}
 	}
-	
 
 	@Override
 	public void showServerPicker()
@@ -293,23 +323,25 @@ public class TournamentServerModel implements ViewTransitionalModelInterface
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
-	 * Sprint 4 Filter System Implementation. 
+	 * Sprint 4 Filter System Implementation.
 	 * 
 	 */
 	public ArrayList<TournamentInfo> getFilteredTournaments(TournamentFilterStrategy filterType)
 	{
-		ArrayList<TournamentInfo> filteredTournamentList = new ArrayList<>();		
-		
-		for(TournamentInfo t : allTournamentsList) {
+		ArrayList<TournamentInfo> filteredTournamentList = new ArrayList<>();
 
-			if(filterType.filterResult(t)) {
+		for (TournamentInfo t : allTournamentsList)
+		{
+
+			if (filterType.filterResult(t))
+			{
 				filteredTournamentList.add(t);
 			}
 		}
-		
+
 		return filteredTournamentList;
-		
+
 	}
 }

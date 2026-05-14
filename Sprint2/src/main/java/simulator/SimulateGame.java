@@ -22,7 +22,7 @@ public class SimulateGame
 		players.add(new TourneyPlayer(p3));
 
 		Game game = new IteratedPrisonersDilemma(5);
-
+		game.setTimeDelay(1);
 		game.register(new ActionFileLogger());
 		game.register(new ResultsFileLogger());
 
@@ -39,10 +39,10 @@ public class SimulateGame
 	public static ArrayList<Tournament> createTournaments(){
 		ArrayList<Tournament> tournaments = new ArrayList<>();
 		
-		tournaments.add(makeNewTournament("Open, Not Active Tournament 1", true, false));
-		tournaments.add(makeNewTournament("Closed, Active Tournament 2", false, true));
-		tournaments.add(makeNewTournament("Closed, Not Active Tournament 3", false, false));
-		tournaments.add(makeNewTournament("Open, Active Tournament 4", true, true));
+		tournaments.add(makeNewTournament("OpenNotActiveTournament1", true, false));
+		tournaments.add(makeNewTournament("ClosedActiveTournament2", false, true));
+		tournaments.add(makeNewTournament("ClosedNotActiveTournament3", false, false));
+		tournaments.add(makeNewTournament("OpenActiveTournament4", true, true));
 
 		return tournaments;
 	}

@@ -98,6 +98,13 @@ public class MoveListener extends Observer
 	 */
 	void notifyNextMove()
 	{
-		client.put().uri("/move").body(nextMove).retrieve().body(String.class);
+		String moveUpdate = "Round: " + (nextMove.round + 1) + ": P1 -> " + nextMove.p1Action + " VS P2 -> " + nextMove.p2Action;
+		client.put().uri("/move").body(moveUpdate).retrieve().body(String.class);
+	}
+
+	public void endMessage(String string)
+	{
+		client.put().uri("/move").body(string).retrieve().body(String.class);
+		
 	}
 }

@@ -16,9 +16,9 @@ public class Tournament
 	public boolean registrationOpen; // sprint 3 implementation
 	public boolean running; // sprint 3 implementation
 
-	String name;
-	
-	
+	public String name;
+
+
 	@Override
 	public String toString()
 	{

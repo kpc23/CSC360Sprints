@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import simulator.Tournament;
+import simulator.TourneyPlayer;
 import sprint3.MoveListener;
 import sprint3.UserInfo;
 import sprint4.TournamentInfo;
@@ -62,7 +63,7 @@ public class TournamentServer
 	 */
 	public void setRegistrationStatus(HashMap<Tournament, Boolean> registrationStatus)
 	{
-		this.registrationStatus = registrationStatus;
+		TournamentServer.registrationStatus = registrationStatus;
 	}
 
 	/**
@@ -78,7 +79,7 @@ public class TournamentServer
 	 */
 	public void setSpectators(ArrayList<MoveListener> spectators)
 	{
-		this.spectators = spectators;
+		TournamentServer.spectators = spectators;
 	}
 
 	/**
@@ -107,7 +108,7 @@ public class TournamentServer
 	 */
 	public void setAvailableTournaments(HashMap<String, Tournament> availableTournaments)
 	{
-		this.availableTournaments = availableTournaments;
+		TournamentServer.availableTournaments = availableTournaments;
 	}
 
 	/**
@@ -220,6 +221,19 @@ public class TournamentServer
 		tournament.setRunning(true);
 		tournament.playTournament();
 		tournament.setRunning(false);
+		
+		TourneyPlayer winner = tournament.getScoreboard().get(0);
+		for(TourneyPlayer p : tournament.getScoreboard()) {
+			if(p.getTotalScore() > winner.getTotalScore()) {
+				winner = p;
+			}
+		}
+		
+		String winnerAndScore = "Tournament Ended. Winner: " + winner.getPlayer().getName() + ", Score: " + winner.getTotalScore();
+		
+		for(MoveListener ls : spectators) {
+			ls.endMessage(winnerAndScore);
+		}
 	}
 
 	/**
@@ -268,7 +282,7 @@ public class TournamentServer
 
 		if (rmListener != null)
 		{
-			t.game.deregister(rmListener);
+			t.getGame().deregister(rmListener);
 			spectators.remove(rmListener);
 		}
 	}
