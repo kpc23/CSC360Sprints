@@ -32,7 +32,7 @@ public class TournamentListController
 
 		if (selected != null)
 		{
-			model.viewTournament(selected.name(), model.getIp(), model.getPort());
+			model.viewTournament(selected.name());
 		}
 	}
 

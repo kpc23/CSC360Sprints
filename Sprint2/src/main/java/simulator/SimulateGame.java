@@ -4,11 +4,13 @@
 package simulator;
 
 import java.util.ArrayList;
-/**
- * 
- */
+
+import org.springframework.web.client.RestClient;
+
+import sprint4.TournamentInfo;
+
 public class SimulateGame
-{
+{	
 	public static Tournament makeNewTournament(String name,
 			boolean registrationOpen, boolean running) {
 		
@@ -53,11 +55,40 @@ public class SimulateGame
 	public static void main(String[] args)
 	{
 		
+		String serverIp = "10.14.1.70";
+		int serverPort = 8080;
+		
 		ArrayList<Tournament> tournaments = createTournaments();
+		RestClient tclient = RestClient.create("http://" + serverIp + ":" + serverPort);
 
-		Tournament tournament = tournaments.get(0);
+		for(Tournament t: tournaments) {
+//			TournamentInfo info = new TournamentInfo(t.getName(), t.isRegistrationOpen(), t.isRunning()
+//		);
+			
+			tclient.post()
+			.uri("/addTournament/" + t.getName())
+			.retrieve()
+			.toBodilessEntity();
+			
+			try {
+				Thread.sleep(10000);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+			
+			if(t.isRunning()) {
+				tclient.post()
+				.uri("/beginTournament/" + t.getName())
+				.retrieve()
+				.toBodilessEntity();
+			}
+		}
+		
 
-		tournament.playTournament();		
+//		//hmm need these?
+//		Tournament tournament = tournaments.get(0);
+//		tournament.playTournament();		
 
 	}
 

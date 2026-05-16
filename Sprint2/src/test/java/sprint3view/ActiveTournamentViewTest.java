@@ -12,6 +12,7 @@ import javafx.application.Platform;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import sprint3model.TournamentServerModel;
+import sprint4.TournamentInfo;
 
 @ExtendWith(ApplicationExtension.class)
 class ActiveTournamentViewTest
@@ -23,6 +24,8 @@ class ActiveTournamentViewTest
 	private void start(Stage stage)
 	{
 		model = new TournamentServerModel(stage);
+		
+		model.getAllTournamentsList().add(new TournamentInfo("TournamentTest", true, false));
 		model.showActiveTournament();
 
 		stage.show();
@@ -47,7 +50,7 @@ class ActiveTournamentViewTest
 		Platform.runLater(() ->
 		{
 
-			model.getActionsMoveList().add("Round 1: Player 1 -> 1");
+			model.setNextMove("Round 1: Player 1 -> 1");
 
 		});
 
@@ -60,7 +63,7 @@ class ActiveTournamentViewTest
 		Platform.runLater(() ->
 		{
 
-			model.getActionsMoveList().add("Round 1: Player 2 -> 0");
+			model.setNextMove("Round 1: Player 2 -> 0");
 
 		});
 
@@ -83,7 +86,6 @@ class ActiveTournamentViewTest
 
 		ListView<?> lv = robot.lookup("#tournamentListView").queryAs(ListView.class);
 		Assertions.assertThat(lv).isVisible();
-
 	}
 
 }

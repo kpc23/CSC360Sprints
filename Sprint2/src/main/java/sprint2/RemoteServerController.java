@@ -20,6 +20,8 @@ public class RemoteServerController
 	public static void main(String[] args)
 	{
 		new SpringApplicationBuilder(RemoteServerController.class)
+		.properties("server.address=0.0.0.0")// or 10.14.1.71
+		.properties("server.port=8081")
 				// .profiles("password")
 				// .profiles("random")
 				.run(args);
@@ -47,9 +49,11 @@ public class RemoteServerController
 	}
 
 	@GetMapping("/makeChoice/{actions}")
-	public int makeChoice(@PathVariable int actions)
+	public int makeChoice(@PathVariable int actions) throws Exception
 	{
-		// should i add a try-catch?
+		if(participantType == null) {
+			throw new Exception("Not found");
+		}
 		return participantType.makeChoice(actions);
 	}
 }

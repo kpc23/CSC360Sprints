@@ -1,6 +1,3 @@
-/**
- * 
- */
 package simulator;
 
 /**
@@ -16,11 +13,12 @@ public class ResultsFileLogger extends Observer
 	}
 
 	@Override
-	public void update(Subject subject)
+	public void update(Subject subject, State s)
 	{
-		Game game = (Game) subject;
-		State s = game.currentState;
-		messageUpdate = "Game Score Result: " + s.p1Score + " vs " + s.p2Score;
+		messageUpdate = "Game Score Result: " 
+					+ s.p1Score 
+					+ " vs " 
+					+ s.p2Score;
 		System.out.println(messageUpdate);
 	}
 

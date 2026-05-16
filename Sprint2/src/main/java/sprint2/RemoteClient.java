@@ -88,7 +88,7 @@ public class RemoteClient
 	{
 		/// register/{ipaddress}/{port}/{tournamentName}/{playerName}
 		// {ipaddress}:{port}/register/{tournamentName}/{playerName}
-		String url = serverAddress + ":" + serverPort + "/register/" + ipaddress + "/" + port + "/" + tournamentName
+		String url = "http://" + serverAddress + ":" + serverPort + "/register/" + ipaddress + "/" + port + "/" + tournamentName
 				+ "/" + playerName;
 
 		System.out.println(url);

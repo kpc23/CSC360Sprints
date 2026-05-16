@@ -8,7 +8,9 @@ import simulator.State;
 import simulator.Subject;
 
 /**
- * Sprint 3 new class
+ * Sprint 3 new class - Game observer to send move updates to spectator UI. 
+ * 
+ * Game changes occur -> listener is notified, sends the move w/ PUT request.
  */
 public class MoveListener extends Observer
 {
@@ -23,6 +25,7 @@ public class MoveListener extends Observer
 	RestClient client; // this way client can send updates to appropriate location.
 
 	/**
+	 * Constructor
 	 * @param nextMove
 	 * @param userInfo
 	 * @param client
@@ -86,10 +89,9 @@ public class MoveListener extends Observer
 	/**
 	 * 
 	 */
-	public void update(Subject subject)
+	public void update(Subject subject, State s)
 	{
-		Game game = (Game) subject;
-		this.nextMove = new State(game.getCurrentState());
+		this.nextMove = s;
 		notifyNextMove();
 	}
 
@@ -98,13 +100,25 @@ public class MoveListener extends Observer
 	 */
 	void notifyNextMove()
 	{
-		String moveUpdate = "Round: " + (nextMove.round + 1) + ": P1 -> " + nextMove.p1Action + " VS P2 -> " + nextMove.p2Action;
-		client.put().uri("/move").body(moveUpdate).retrieve().body(String.class);
+		try {
+			String moveUpdate = "Round: " + (nextMove.round + 1) + ": P1 -> " + nextMove.p1Action + " VS P2 -> " + nextMove.p2Action;
+			client.put().uri("/move").body(moveUpdate).retrieve().body(String.class);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	public void endMessage(String string)
 	{
-		client.put().uri("/move").body(string).retrieve().body(String.class);
+		try {
+			client.put().uri("/move").body(string).retrieve().body(String.class);
+
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		
 	}
 }

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package simulator;
 
 import java.util.ArrayList;
@@ -22,11 +19,15 @@ public abstract class Subject
 		listeners.remove(observer);
 	}
 
-	public void notifyObservers()
+	public void notifyObservers(State s)
 	{
 		for (Observer observer : listeners)
 		{
-			observer.update(this);
+			try {
+				observer.update(this, s);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }

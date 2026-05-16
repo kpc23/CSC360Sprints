@@ -1,6 +1,3 @@
-/**
- * 
- */
 package simulator;
 
 import java.util.ArrayList;
@@ -146,7 +143,13 @@ public class Tournament
 
 	public void playTournament()
 	{
-		Tuple pair = bracketType.nextPair(game.currentState);
+		//reset prev
+		for(TourneyPlayer p : scoreboard) {
+			p.totalScore = 0;
+			p.playersPlayed.clear();
+		}
+		
+		Tuple pair = bracketType.nextPair(game.getCurrentState());
 
 		while (pair != null)
 		{
@@ -154,13 +157,13 @@ public class Tournament
 
 			game.play(pair.p1.player, pair.p2.player);
 
-			State state = game.currentState;
+			State state = game.getCurrentState();
 			pair.p1.totalScore += state.p1Score;
 			pair.p1.playersPlayed.add(pair.p2);
 			pair.p2.totalScore += state.p2Score;
 			pair.p2.playersPlayed.add(pair.p1);
 
-			pair = bracketType.nextPair(game.currentState);
+			pair = bracketType.nextPair(game.getCurrentState());
 
 		}
 	}

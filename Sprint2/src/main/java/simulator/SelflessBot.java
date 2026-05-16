@@ -1,5 +1,5 @@
 /**
- * 
+ * selfless bot player
  */
 package simulator;
 

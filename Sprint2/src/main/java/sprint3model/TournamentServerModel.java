@@ -24,16 +24,63 @@ public class TournamentServerModel implements ViewTransitionalModelInterface
 	ObservableList<TournamentInfo> allTournamentsList;
 	UserClient client;
 	Stage stage;
-	int port;
-	String ipAddress;
+	//viewer reciever loc
+	String viewerIp;
+	int viewerPort;
+	
 	String currentTournamentSpectating;
+	
+	String serverIp;
+	int serverPort;
 
 	public TournamentServerModel(Stage stage)
 	{
 		this.stage = stage;
 		this.actionsMoveList = FXCollections.observableArrayList();
 		this.allTournamentsList = FXCollections.observableArrayList();
+		this.viewerIp = "localhost";
+		this.viewerPort = 9000;
 	}
+	
+
+	/**
+	 * @return the viewerIp
+	 */
+	public String getViewerIp()
+	{
+		return viewerIp;
+	}
+
+
+	/**
+	 * @param viewerIp the viewerIp to set
+	 */
+	public void setViewerIp(String viewerIp)
+	{
+		this.viewerIp = viewerIp;
+	}
+
+
+
+	/**
+	 * @return the viewerPort
+	 */
+	public int getViewerPort()
+	{
+		return viewerPort;
+	}
+
+
+
+	/**
+	 * @param viewerPort the viewerPort to set
+	 */
+	public void setViewerPort(int viewerPort)
+	{
+		this.viewerPort = viewerPort;
+	}
+
+
 
 	/**
 	 * @return the client
@@ -68,38 +115,6 @@ public class TournamentServerModel implements ViewTransitionalModelInterface
 	}
 
 	/**
-	 * @return the port
-	 */
-	public int getPort()
-	{
-		return port;
-	}
-
-	/**
-	 * @param port the port to set
-	 */
-	public void setPort(int port)
-	{
-		this.port = port;
-	}
-
-	/**
-	 * @return the ip
-	 */
-	public String getIp()
-	{
-		return ipAddress;
-	}
-
-	/**
-	 * @param ip the ip to set
-	 */
-	public void setIp(String ip)
-	{
-		this.ipAddress = ip;
-	}
-
-	/**
 	 * @return the moveList
 	 */
 	public ObservableList<String> getActionsMoveList()
@@ -131,21 +146,7 @@ public class TournamentServerModel implements ViewTransitionalModelInterface
 		this.stage = stage;
 	}
 
-	/**
-	 * @return the ipAddress
-	 */
-	public String getIpAddress()
-	{
-		return ipAddress;
-	}
 
-	/**
-	 * @param ipAddress the ipAddress to set
-	 */
-	public void setIpAddress(String ipAddress)
-	{
-		this.ipAddress = ipAddress;
-	}
 
 	/**
 	 * @param moveList the moveList to set
@@ -163,37 +164,27 @@ public class TournamentServerModel implements ViewTransitionalModelInterface
 		this.allTournamentsList = allTournamentsList;
 	}
 
-	public void viewTournament(String tournamentName, String ip, int port)
+	public void viewTournament(String tournamentName)
 	{
-		this.ipAddress = ip;
-		this.port = port;
+		
 		actionsMoveList.clear();
 
 		if (client != null)
 		{
-			client.spectateTournament(tournamentName, "localhost", 9000);
+			client.spectateTournament(tournamentName, this.viewerIp, this.viewerPort);
 
 		}
 
 		this.setCurrentTournamentSpectating(tournamentName);
 		showActiveTournament();
 
-		if (client != null)
-		{
-			new Thread(() ->
-			{
-				client.beginTournament(tournamentName);
-			}).start();
-
-		}
-
 	}
 
-	public void unviewTournament(String tournamentName, String ip, int port) throws Exception
+	public void unviewTournament() throws Exception
 	{
 		if (client != null && currentTournamentSpectating != null)
 		{
-			client.unspectateTournament(currentTournamentSpectating, "localhost", 9000);
+			client.unspectateTournament(currentTournamentSpectating, this.viewerIp, this.viewerPort);
 
 		}
 
@@ -202,18 +193,14 @@ public class TournamentServerModel implements ViewTransitionalModelInterface
 		showServerList();
 	}
 
-//	public void showTournament()
-//	{
-//		//could be useful later...?
-//	}
-
 	public void connectToServer(String ipAddress, int port) throws Exception
 	{
 
-		this.ipAddress = ipAddress;
-		this.port = port;
+		this.serverIp = ipAddress;
+		this.serverPort = port;
+		
 		RestClient restclient = RestClient.create();
-		this.client = new UserClient(ipAddress, port, restclient);
+		this.client = new UserClient(serverIp, serverPort, restclient);
 		tournamentsFromServer();
 		try
 		{

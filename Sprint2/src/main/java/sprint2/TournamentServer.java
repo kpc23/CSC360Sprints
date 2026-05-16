@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import simulator.SimulateGame;
 import simulator.Tournament;
 import simulator.TourneyPlayer;
 import sprint3.MoveListener;
@@ -39,21 +41,14 @@ public class TournamentServer
 	 * the specific Tournament, accessible via HashMap.
 	 */
 	public static HashMap<String, Tournament> availableTournaments = new HashMap<>();
-	public static HashMap<Tournament, Boolean> registrationStatus = new HashMap<>(); // true --- open, false -- closed
+	public static HashMap<String, Boolean> registrationStatus = new HashMap<>(); // true --- open, false -- closed
 	public static ArrayList<MoveListener> spectators = new ArrayList<>(); // sprint 3 implementation
-
-	public static void main(String[] args)
-	{
-		new SpringApplicationBuilder(TournamentServer.class)
-				// .profiles("password")
-				// .profiles("random")
-				.run(args);
-	}
-
+	public static ArrayList<TournamentInfo> tournamentInfoList = new ArrayList<>(); // sprint 3 implementation
+	
 	/**
 	 * @return the registrationStatus
 	 */
-	public static HashMap<Tournament, Boolean> getRegistrationStatus()
+	public static HashMap<String, Boolean> getRegistrationStatus()
 	{
 		return registrationStatus;
 	}
@@ -61,7 +56,7 @@ public class TournamentServer
 	/**
 	 * @param registrationStatus the registrationStatus to set
 	 */
-	public void setRegistrationStatus(HashMap<Tournament, Boolean> registrationStatus)
+	public void setRegistrationStatus(HashMap<String, Boolean> registrationStatus)
 	{
 		TournamentServer.registrationStatus = registrationStatus;
 	}
@@ -92,7 +87,7 @@ public class TournamentServer
 	{
 		tournament.setName(tournamentName);
 		availableTournaments.put(tournamentName, tournament);
-		registrationStatus.put(tournament, false);
+		registrationStatus.put(tournamentName, false);
 	}
 
 	/**
@@ -118,7 +113,7 @@ public class TournamentServer
 	 */
 	public void beginRegistration(Tournament tournament)
 	{
-		registrationStatus.put(tournament, true);
+		registrationStatus.put(tournament.getName(), true);
 		tournament.setRegistrationOpen(true);
 
 	}
@@ -130,11 +125,19 @@ public class TournamentServer
 	 */
 	public void endRegistration(Tournament tournament)
 	{
-		registrationStatus.put(tournament, false);
+		registrationStatus.put(tournament.getName(), false);
 		tournament.setRegistrationOpen(false);
 
 	}
+	
 
+	@PostMapping("/addTournament/{tournamentName}")
+	public void addCompleteTournament(@PathVariable String tournamentName) {
+		Tournament t = SimulateGame.makeNewTournament(tournamentName, true, false);
+		availableTournaments.put(tournamentName, t);
+		registrationStatus.put(tournamentName, t.isRegistrationOpen());
+	}
+	
 	@GetMapping("/tournaments")
 	public ArrayList<TournamentInfo> getTournaments(){
 		ArrayList<TournamentInfo> tournaments = new ArrayList<>();
@@ -171,7 +174,7 @@ public class TournamentServer
 			throw new Exception("Invalid Tournament");
 		}
 
-		if (registrationStatus.get(t))
+		if (registrationStatus.get(t.getName()))
 		{
 			Proxy proxy = new Proxy(playerName, ipaddress, port);
 			t.registerPlayer(proxy);
@@ -193,7 +196,7 @@ public class TournamentServer
 		{
 			Tournament t = availableTournaments.get(key);
 
-			if (registrationStatus.get(t))
+			if (registrationStatus.get(t.getName()))
 			{
 				System.out.println(key);
 			}
@@ -207,7 +210,7 @@ public class TournamentServer
 		if(t == null) {
 			throw new Exception("invalid");
 		}
-		beginTournament(t);
+		new Thread(() -> beginTournament(t)).start();
 	}
 	
 	/**

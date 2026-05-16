@@ -26,7 +26,7 @@ public class ActiveTournamentController
 	{
 		try
 		{
-			model.unviewTournament(model.getCurrentTournamentSpectating(), model.getIp(), model.getPort());
+			model.unviewTournament();
 
 		} catch (Exception e)
 		{

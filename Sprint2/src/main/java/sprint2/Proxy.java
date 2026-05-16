@@ -10,7 +10,6 @@ import simulator.Participant;
 public class Proxy extends Participant
 {
 	String IPAddress;
-	String name;
 	int port;
 	RestClient client;
 
@@ -42,22 +41,6 @@ public class Proxy extends Participant
 	public void setIPAddress(String iPAddress)
 	{
 		IPAddress = iPAddress;
-	}
-
-	/**
-	 * @return the name
-	 */
-	public String getName()
-	{
-		return name;
-	}
-
-	/**
-	 * @param name the name to set
-	 */
-	public void setName(String name)
-	{
-		this.name = name;
 	}
 
 	/**
