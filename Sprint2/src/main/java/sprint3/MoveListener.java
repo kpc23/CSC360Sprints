@@ -2,7 +2,6 @@ package sprint3;
 
 import org.springframework.web.client.RestClient;
 
-import simulator.Game;
 import simulator.Observer;
 import simulator.State;
 import simulator.Subject;

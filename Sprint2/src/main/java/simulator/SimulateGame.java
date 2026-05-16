@@ -7,8 +7,6 @@ import java.util.ArrayList;
 
 import org.springframework.web.client.RestClient;
 
-import sprint4.TournamentInfo;
-
 public class SimulateGame
 {	
 	public static Tournament makeNewTournament(String name,
@@ -45,7 +43,6 @@ public class SimulateGame
 		tournaments.add(makeNewTournament("ClosedActiveTournament2", false, true));
 		tournaments.add(makeNewTournament("ClosedNotActiveTournament3", false, false));
 		tournaments.add(makeNewTournament("OpenActiveTournament4", true, true));
-
 		return tournaments;
 	}
 	
@@ -62,8 +59,6 @@ public class SimulateGame
 		RestClient tclient = RestClient.create("http://" + serverIp + ":" + serverPort);
 
 		for(Tournament t: tournaments) {
-//			TournamentInfo info = new TournamentInfo(t.getName(), t.isRegistrationOpen(), t.isRunning()
-//		);
 			
 			tclient.post()
 			.uri("/addTournament/" + t.getName())
@@ -76,7 +71,6 @@ public class SimulateGame
 				e.printStackTrace();
 			}
 			
-			
 			if(t.isRunning()) {
 				tclient.post()
 				.uri("/beginTournament/" + t.getName())
@@ -84,12 +78,5 @@ public class SimulateGame
 				.toBodilessEntity();
 			}
 		}
-		
-
-//		//hmm need these?
-//		Tournament tournament = tournaments.get(0);
-//		tournament.playTournament();		
-
 	}
-
 }
