@@ -72,7 +72,7 @@ public class SimulateGame
 			}
 			
 			if(t.isRunning()) {
-				tclient.post()
+				tclient.get()
 				.uri("/beginTournament/" + t.getName())
 				.retrieve()
 				.toBodilessEntity();
