@@ -78,5 +78,8 @@ public class SimulateGame
 				.toBodilessEntity();
 			}
 		}
+		
+		
 	}
+	//end main
 }

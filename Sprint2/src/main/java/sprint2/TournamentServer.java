@@ -177,6 +177,7 @@ public class TournamentServer
 		{
 			Proxy proxy = new Proxy(playerName, ipaddress, port);
 			t.registerPlayer(proxy);
+			System.out.println(proxy.getName() + " is registered to " + proxy.getIPAddress() + ":"+ proxy.getPort() + "/" + t.getName());
 
 		} else
 		{
