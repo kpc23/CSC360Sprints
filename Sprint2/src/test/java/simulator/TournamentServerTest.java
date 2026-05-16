@@ -36,6 +36,7 @@ class TournamentServerTest
 	void setUp() throws Exception
 	{
 		tServer.getAvailableTournaments().clear(); // avoid crossover
+		TournamentServer.getRegistrationStatus().clear(); // avoid crossover
 		ArrayList<TourneyPlayer> scoreboard = new ArrayList<>();
 		Game game = new IteratedPrisonersDilemma(5);
 		Bracket bracket = new RoundRobinBracket(scoreboard);
@@ -50,7 +51,7 @@ class TournamentServerTest
 	void testRegisterOpen()
 	{
 		tServer.beginRegistration(t1);
-		assertEquals(true, tServer.registrationStatus.get(t1));
+		assertEquals(true, TournamentServer.registrationStatus.get(t1.getName()));
 
 		RemoteClient client = new RemoteClient("http://localhost", port);
 
@@ -71,7 +72,7 @@ class TournamentServerTest
 	void testRegisterEnded()
 	{
 		tServer.endRegistration(t1);
-		assertEquals(false, tServer.registrationStatus.get(t1));
+		assertEquals(false, TournamentServer.registrationStatus.get(t1.getName()));
 		RemoteClient client = new RemoteClient("http://localhost", port);
 
 		assertThrows(HttpServerErrorException.class,
@@ -109,7 +110,7 @@ class TournamentServerTest
 	void testRegisterInvalidIPAddressTournament()
 	{
 		tServer.beginRegistration(t1);
-		assertEquals(true, tServer.registrationStatus.get(t1));
+		assertEquals(true, TournamentServer.registrationStatus.get(t1.getName()));
 
 		RemoteClient client = new RemoteClient("http://localhost", port);
 

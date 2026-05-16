@@ -26,6 +26,6 @@ public class ActionsViewerReciever
 	//Move message from prev sprint. Facilitates the updates for the UI display
 	@PutMapping("/move")
 	public void moveReciever(@RequestBody String move) {
-		Platform.runLater(() -> model.setNextMove(move));
+		model.setNextMove(move);
 	}
 }
